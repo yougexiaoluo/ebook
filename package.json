@@ -26,6 +26,7 @@
     "fastclick": "^1.0.6",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "web-storage-cache": "^1.1.0"
   }
 }
