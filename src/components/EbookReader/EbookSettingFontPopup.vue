@@ -9,7 +9,7 @@
         >
           <span class="icon-down2"></span>
         </div>
-        <span class="ebook-popup-text">选择字体</span>
+        <span class="ebook-popup-text">{{$t('book.selectFont')}}</span>
       </div>
       <div class="ebook-popup-list-wrapper">
         <div class="ebook-popup-item"
