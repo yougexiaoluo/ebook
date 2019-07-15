@@ -5,7 +5,7 @@ export default {
   defaultFontSize: 16, // 默认字体大小
   defaultFontFamily: 'Default',
   fontFamilyVisible: false,
-  defaultTheme: 'default',
+  defaultTheme: 'Default',
   bookAvailable: false,
   progress: 0,
   section: 0,

@@ -10,7 +10,9 @@ import { ebookMixin } from '../../utils/mixin/ebookMixin'
 import { getFontFamily,
          saveFontFamily,
          getFontSize,
-         saveFontSize
+         saveFontSize,
+         getTheme,
+         saveTheme
 } from '@/utils/localStorage'
 
 global.ePub = Epub
@@ -29,7 +31,7 @@ export default {
   mixins: [ebookMixin],
   methods: {
     initEpub () {
-      const url = 'http://localhost:8081/epub/' + this.fileName + '.epub' // nginx 服务器静态资源地址
+      const url = `${process.env.VUE_APP_RES_URL}/epub/${this.fileName}.epub` // nginx 服务器静态资源地址
       this.book = new Epub(url)
       this.setCurrentBook(this.book) // 将this.book存储到store中，进行共享
       // 生成rendition对象
@@ -40,8 +42,10 @@ export default {
       })
       // 开始渲染电子书
       this.rendition.display().then(() => {
+        this.initTheme()
         this.initFontFamily()
         this.initFontSize()
+        this.initGlobalStyle()
       })
 
       // 手势操作(判断左滑、右滑)
@@ -70,10 +74,10 @@ export default {
         // 需要传入的是url地址
         Promise.all([
           // 使用环境变量，为了解决上产品线之后，当用户预览时静态嵌入客户端中
-          contents.addStylesheet(`${process.env.VUE_APP_RESOURCE}/fonts/family/cabin.css`),
-          contents.addStylesheet(`${process.env.VUE_APP_RESOURCE}/fonts/family/daysOne.css`),
-          contents.addStylesheet(`${process.env.VUE_APP_RESOURCE}/fonts/family/montserrat.css`),
-          contents.addStylesheet(`${process.env.VUE_APP_RESOURCE}/fonts/family/tangerine.css`)
+          contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/family/cabin.css`),
+          contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/family/daysOne.css`),
+          contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/family/montserrat.css`),
+          contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/family/tangerine.css`)
         ]).then(() => {
           // 字体加载完成之后
         })
@@ -108,7 +112,7 @@ export default {
       this.setSettingVisible(-1)
       this.setFontFamilyVisible(false)
     },
-    // 初始化本地缓存
+    // 初始化数据
     initFontSize () {
       let fontSize = getFontSize(this.fileName)
       if (!fontSize) {
@@ -127,6 +131,22 @@ export default {
         this.rendition.themes.font(font)
         this.setDefaultFontFamily(font)
       }
+    },
+    initTheme () {
+      // 从本地中获取主题
+      let defaultTheme = getTheme(this.fileName)
+
+      if (!defaultTheme) {
+        defaultTheme = this.themeList[0].name
+        saveTheme(this.fileName, defaultTheme)
+      }
+      this.setDefaultTheme(defaultTheme)
+      // 注册主题
+      this.themeList.forEach(theme => {
+        this.rendition.themes.register(theme.name, theme.style)
+      })
+      // 选择默认主题
+      this.rendition.themes.select(defaultTheme)
     }
   }
 }
