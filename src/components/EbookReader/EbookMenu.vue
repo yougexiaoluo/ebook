@@ -23,14 +23,16 @@
     <ebook-setting-font />
     <ebook-setting-font-popup />
     <ebook-setting-theme />
+    <ebook-setting-progress />
   </div>
 </template>
 
 <script>
 import { ebookMixin } from '../../utils/mixin/ebookMixin'
 import EbookSettingFont from './EbookSettingFont'
-import EbookSettingFontPopup from './EbookSettingFontPopup'
 import EbookSettingTheme from './EbookSettingTheme'
+import EbookSettingProgress from './EbookSettingProgress'
+import EbookSettingFontPopup from './EbookSettingFontPopup'
 
 export default {
   mixins: [ebookMixin],
@@ -41,14 +43,15 @@ export default {
   },
   components: {
     EbookSettingFont,
-    EbookSettingFontPopup,
-    EbookSettingTheme
+    EbookSettingTheme,
+    EbookSettingProgress,
+    EbookSettingFontPopup
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/scss/global.scss';
+@import "@/assets/styles/scss/global.scss";
 
 .menu-wrapper {
   position: absolute;
