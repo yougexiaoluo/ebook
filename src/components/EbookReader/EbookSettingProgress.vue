@@ -37,19 +37,20 @@
 
 <script>
 import { ebookMixin } from '@/utils/mixin/ebookMixin'
-import { getReadTime } from '@/utils/localStorage'
 
 export default {
   mixins: [ebookMixin],
   computed: {
     // 获取章节标题
     getSectionName () {
-      if (this.section) {
-        const sectionInfo = this.currentBook.section(this.section)
-        if (sectionInfo && sectionInfo.href) {
-          return this.currentBook.navigation.get(sectionInfo.href).label
-        }
-      }
+      // if (this.section) {
+      //   const sectionInfo = this.currentBook.section(this.section)
+      //   if (sectionInfo && sectionInfo.href) {
+      //     return this.currentBook.navigation.get(sectionInfo.href).label
+      //   }
+      // }
+
+      return this.section ? this.navigation[this.section].label : ''
     }
   },
   methods: {
@@ -83,7 +84,7 @@ export default {
     // 显示章节
     displaySection () {
       const sectionInfo = this.currentBook.section(this.section)
-      if (sectionInfo && sectionInfo.href) {
+      if (sectionInfo && sectionInfo.href && this.currentBook && this.currentBook.navigation) {
         this.display(sectionInfo.href)
       }
     },
@@ -95,19 +96,6 @@ export default {
     // 设置进度背景
     updateProgressBg () {
       this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
-    },
-    // 获取阅读时间
-    getReadTimeText () {
-      return this.$t('book.haveRead').replace('$1', this.getReadTimeByMinute())
-    },
-    // 阅读时间转换
-    getReadTimeByMinute () {
-      const readTime = getReadTime(this.fileName)
-      if (!readTime) {
-        return 0
-      } else {
-        return Math.ceil(readTime / 60)
-      }
     }
   },
   updated () {

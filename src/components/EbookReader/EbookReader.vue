@@ -6,7 +6,8 @@
 
 <script>
 import Epub from 'epubjs'
-import { ebookMixin } from '../../utils/mixin/ebookMixin'
+import { ebookMixin } from '@/utils/mixin/ebookMixin'
+import { flatent } from '@/utils/book'
 import { getFontFamily,
          saveFontFamily,
          getFontSize,
@@ -33,7 +34,7 @@ export default {
       this.setCurrentBook(this.book) // 将this.book存储到store中，进行共享
       this.initRendition()
       this.initGesture()
-
+      this.parseBook()
       // 初始化完成后，进行书籍分页
       this.book.ready.then(() => {
         return this.book.locations.generate(750 * (window.innerWidth / 375) * getFontSize(this.fileName) / 16)
@@ -42,7 +43,6 @@ export default {
         this.refreshLocation() // 重新回去进度，分页未完成的时候获取progress为null
       })
     },
-
     // 上一页
     prevPage () {
       if (this.rendition) {
@@ -69,12 +69,6 @@ export default {
       }
       // this.$store.dispatch('setMenuVisible', !this.menuVisible)
       this.setMenuVisible(!this.menuVisible)
-    },
-    hideTitleAndMenu () {
-      //  this.$store.dispatch('setMenuVisible', false)
-      this.setMenuVisible(false)
-      this.setSettingVisible(-1)
-      this.setFontFamilyVisible(false)
     },
     // 初始化数据
     initFontSize () {
@@ -163,6 +157,43 @@ export default {
         // 阻止事件冒泡、浏览器默认行为
         event.preventDefault() // 这里epubjs会带来版本问题
         event.stopPropagation()
+      })
+    },
+    // 解析电子书
+    parseBook () {
+      /**
+       * 需求：
+       *    1. 获取书籍封面
+       *    2. 获取标题、作者信息
+       *    3. 获取目录
+      */
+      // 1
+      this.book.loaded.cover.then(cover => {
+        this.book.archive.createUrl(cover).then(url => {
+          this.setCover(url)
+        })
+      })
+      // 2
+      this.book.loaded.metadata.then(metadata => {
+        this.setMetadata(metadata)
+      })
+      // 3
+      this.book.loaded.navigation.then(navigation => {
+        let newItem = flatent(navigation.toc)
+
+        // 查询是否有子目录(使用递归的方式取查询)
+        function find (item, level = 0) {
+          if (!item.parent) {
+            return level
+          } else {
+            return find(newItem.filter(parentItem => parentItem.id === item.parent)[0], ++level)
+          }
+        }
+        // 添加level字段
+        newItem.forEach((item, i) => {
+          item.level = find(item)
+        })
+        this.setNavigation(newItem)
       })
     }
   }
