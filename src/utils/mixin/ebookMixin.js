@@ -1,7 +1,7 @@
 // 此文件用于存放相同的代码
 import { mapGetters, mapActions } from 'vuex'
 import { themeList, addCss, removeAllCss, getReadTimeByMinute } from '../book'
-import { saveLocation } from '../localStorage'
+import { saveLocation, getBookmark } from '../localStorage'
 
 const ebookMixin = {
   computed: {
@@ -74,8 +74,8 @@ const ebookMixin = {
           break
       }
     },
-     // 重新刷新进度
-     refreshLocation () {
+      // 重新刷新进度
+      refreshLocation () {
       const currentLocation = this.currentBook.rendition.currentLocation() // 得到当前进度位置
       if (currentLocation && currentLocation.start) {
         const startCfi = currentLocation.start.cfi // 当前章节
@@ -83,6 +83,15 @@ const ebookMixin = {
         this.setProgress(Math.floor(progress * 100)) // 保存进度
         this.setSection(currentLocation.start.index) // 获取章节标题
         saveLocation(this.fileName, startCfi) // 保存进度位置
+        // 控制书签是否添加
+        let bookmark = getBookmark(this.fileName)
+       if (bookmark) {
+        if (bookmark.some(item => item.cfi === startCfi)) {
+          this.setIsBookmark(true)
+        } else {
+          this.setIsBookmark(false)
+        }
+       }
       }
     },
     display (target, callback) {

@@ -1,6 +1,12 @@
 <template>
   <div class="ebook-reader">
     <div id="read"></div>
+    <!-- 借助其它的空标签实现某些功能 -->
+    <div class="ebook-reader-mask"
+         @click="onMaskClick"
+         @touchmove="move"
+         @touchend="moveEnd"
+    ></div>
   </div>
 </template>
 
@@ -33,7 +39,7 @@ export default {
       this.book = new Epub(url)
       this.setCurrentBook(this.book) // 将this.book存储到store中，进行共享
       this.initRendition()
-      this.initGesture()
+      // this.initGesture()  实现书签功能，不能使用了
       this.parseBook()
       // 初始化完成后，进行书籍分页
       this.book.ready.then(() => {
@@ -195,10 +201,53 @@ export default {
         })
         this.setNavigation(newItem)
       })
+    },
+    // 注册事件，实现其它逻辑
+    onMaskClick (event) {
+      const offsetX = event.offsetX
+      const width = window.innerWidth
+      if (offsetX > 0 && offsetX < width * 0.3) {
+        this.prevPage()
+      } else if (offsetX > 0 && offsetX > width * 0.7) {
+        this.nextPage()
+      } else {
+        this.toggleTitleAndMenu()
+      }
+    },
+    move (event) {
+      let offsetY = 0
+      if (this.firstOffsetY) {
+        offsetY = event.changedTouches[0].clientY - this.firstOffsetY
+        this.setOffsetY(offsetY)
+
+        event.preventDefault()
+        event.stopPropagation()
+      } else {
+        this.firstOffsetY = event.changedTouches[0].clientY
+      }
+    },
+    moveEnd (event) {
+      this.firstOffsetY = 0
+      this.setOffsetY(0)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  @import '@/assets/styles/scss/global.scss';
+
+  .ebook-reader {
+    width: 100%;
+    height: 100%;
+    .ebook-reader-mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 150;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+  }
 </style>
