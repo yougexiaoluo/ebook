@@ -41,7 +41,8 @@ export default {
       return {
         position: 'fixed',
         top: 0,
-        right: `${(window.innerWidth - this.$refs.bookmark.clientWidth) / 2}px`
+        right: 0
+        // right: `${(window.innerWidth - this.$refs.bookmark.clientWidth) / 2}px`
       }
     }
   },

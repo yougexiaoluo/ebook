@@ -40,19 +40,6 @@ import { ebookMixin } from '@/utils/mixin/ebookMixin'
 
 export default {
   mixins: [ebookMixin],
-  computed: {
-    // 获取章节标题
-    getSectionName () {
-      // if (this.section) {
-      //   const sectionInfo = this.currentBook.section(this.section)
-      //   if (sectionInfo && sectionInfo.href) {
-      //     return this.currentBook.navigation.get(sectionInfo.href).label
-      //   }
-      // }
-
-      return this.section ? this.navigation[this.section].label : ''
-    }
-  },
   methods: {
     onProgressChange (progress) {
       this.setProgress(progress).then(() => {

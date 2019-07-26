@@ -6,6 +6,9 @@
          @click="onMaskClick"
          @touchmove="move"
          @touchend="moveEnd"
+         @mousedown.left="mouseDown"
+         @mousemove.left="mouseMove"
+         @mouseup.left="mouseUp"
     ></div>
   </div>
 </template>
@@ -204,6 +207,9 @@ export default {
     },
     // 注册事件，实现其它逻辑
     onMaskClick (event) {
+      if (this.mouseState && (this.mouseState === 2 || this.mouseState === 3)) {
+        return
+      }
       const offsetX = event.offsetX
       const width = window.innerWidth
       if (offsetX > 0 && offsetX < width * 0.3) {
@@ -219,8 +225,7 @@ export default {
       if (this.firstOffsetY) {
         offsetY = event.changedTouches[0].clientY - this.firstOffsetY
         this.setOffsetY(offsetY)
-
-        event.preventDefault()
+        event.preventDefault() // 解决设备上下拉造成整体下拉的问题
         event.stopPropagation()
       } else {
         this.firstOffsetY = event.changedTouches[0].clientY
@@ -229,6 +234,48 @@ export default {
     moveEnd (event) {
       this.firstOffsetY = 0
       this.setOffsetY(0)
+    },
+    // 兼容pc端事件
+    // 1 - 鼠标进入
+    // 2 - 鼠标进入后移动
+    // 3 - 鼠标从移动转态松手
+    // 4 - 鼠标还原
+    mouseDown (event) {
+      this.mouseState = 1
+      this.mosueStartTime = event.timeStamp
+      event.preventDefault()
+      event.stopPropagation()
+    },
+    mouseMove (event) {
+      if (this.mouseState === 1) {
+        this.mouseState = 2
+      } else if (this.mouseState === 2) {
+        let offsetY = 0
+        if (this.firstOffsetY) {
+          offsetY = event.clientY - this.firstOffsetY
+          this.setOffsetY(offsetY)
+        } else {
+          this.firstOffsetY = event.clientY
+        }
+      }
+      event.preventDefault()
+      event.stopPropagation()
+    },
+    mouseUp (event) {
+      if (this.mouseState === 2) {
+        this.firstOffsetY = null
+        this.setOffsetY(0)
+        this.mouseState = 3
+      } else {
+        this.mouseState = 4
+      }
+      let time = event.timeStamp - this.mosueStartTime
+      // 解决点击有手抖的而不能触发事件的情况(使用时间戳进行判断)
+      if (time < 100) {
+        this.mouseState = 4
+      }
+      event.preventDefault()
+      event.stopPropagation()
     }
   }
 }

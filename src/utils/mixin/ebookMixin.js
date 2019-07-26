@@ -29,6 +29,17 @@ const ebookMixin = {
     ]),
     themeList () {
       return themeList(this)
+    },
+    // 获取章节标题
+    getSectionName () {
+      // if (this.section) {
+      //   const sectionInfo = this.currentBook.section(this.section)
+      //   if (sectionInfo && sectionInfo.href) {
+      //     return this.currentBook.navigation.get(sectionInfo.href).label
+      //   }
+      // }
+
+      return this.section ? this.navigation[this.section].label : ''
     }
   },
   methods: {

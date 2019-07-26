@@ -29,8 +29,12 @@
         />
       </div>
       <div class="slide-contents-book-infos-wrapper">
-        <div class="slide-contents-book-title">{{ metadata.title }}</div>
-        <div class="slide-contents-book-author">{{ metadata.creator }}</div>
+        <div class="slide-contents-book-title">
+          <span class="slide-contents-book-title-text">{{ metadata.title }}</span>
+        </div>
+        <div class="slide-contents-book-author">
+          <span class="slide-contents-book-author-text">{{ metadata.creator }}</span>
+        </div>
       </div>
       <div class="slide-contents-book-progress-wrapper">
         <div class="slide-contents-book-progress">
@@ -210,14 +214,20 @@ export default {
         padding: 0 px2rem(10);
         box-sizing: border-box;
         .slide-contents-book-title {
-          @include ellipsis2(2);
           font-size: px2rem(14);
           line-height: px2rem(16);
+          @include left;
+          .slide-contents-book-title-text {
+            @include ellipsis2(2);
+          }
         }
         .slide-contents-book-author {
           font-size: px2rem(12);
-          @include ellipsis;
           margin-top: px2rem(5);
+          @include left;
+          .slide-contents-book-author-text {
+            @include ellipsis;
+          }
         }
       }
       // 右侧阅读进度
