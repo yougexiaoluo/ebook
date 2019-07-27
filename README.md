@@ -45,3 +45,13 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
       解决方案：
         再对应的方法添加 
             e.preventDefault() | method: 'default' // 兼容微信
+
+
+### 书城 -- 标题 + 搜索
+  向下滑动屏幕时的交互细节分析
+
+  1. 标题和推荐图标向下渐隐
+  2. 搜索框向上移动到标题位置
+  3. 搜索框逐渐变窄以适应屏幕
+  4. 返回按钮向下居中
+  5. 搜索下方显示阴影

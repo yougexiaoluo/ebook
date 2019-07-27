@@ -9,7 +9,7 @@ export default new Router({
   routes: [{
       path: '/',
       name: 'home',
-      redirect: '/ebook' // 路由重定向
+      redirect: '/store' // 路由重定向
     },
     {
       path: '/ebook',
@@ -20,6 +20,19 @@ export default new Router({
           path: ':fileName', // 可以直接写需要传递的参数(动态路由)
           name: 'EbooReader',
           component: () => import(/* webpackChunkName: 'EbookReader' */ '@/components/EbookReader/EbookReader.vue')
+        }
+      ]
+    },
+    {
+      path: '/store',
+      name: 'store',
+      redirect: '/store/home',
+      component: () => import(/* webpackChunkName: 'store' */ '@/views/store/index.vue'),
+      children: [
+        {
+          path: 'home',
+          name: 'store-home',
+          component: () => import(/* webpackChunkName: 'storeHome' */ '@/views/store/StoreHome.vue')
         }
       ]
     }

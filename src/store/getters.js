@@ -1,4 +1,5 @@
 export default {
+  // 阅读器
   fileName: state => state.fileName, // 获取state中fileName属性
   menuVisible: state => state.menuVisible, // 获取state中menuVisible属性
   settingVisible: state => state.settingVisible, // 获取state中settingVisible属性
@@ -17,5 +18,8 @@ export default {
   paginate: state => state.paginate,
   pagelist: state => state.pagelist,
   offsetY: state => state.offsetY,
-  isBookmark: state => state.isBookmark
+  isBookmark: state => state.isBookmark,
+
+  // 书城
+  hotSearchOffsetY: state => state.hotSearchOffsetY
 }

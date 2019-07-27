@@ -23,5 +23,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  #app {
+    width: 100%;
+    height: 100%;
+    background: #576877;
+    overflow: hidden;
+  }
 </style>

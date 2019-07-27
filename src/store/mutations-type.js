@@ -1,3 +1,4 @@
+// 阅读器
 export const SET_FILENAME = 'SET_FILENAME'
 export const SET_MENUTVISIBLE = 'SET_MENUTVISIBLE'
 export const SET_SETTING_VISIBLE = 'SET_SETTING_VISIBLE'
@@ -17,3 +18,6 @@ export const SET_PAGINATE = 'SET_PAGINATE'
 export const SET_PAGELIST = 'SET_PAGELIST'
 export const SET_OFFSETY = 'SET_OFFSETY'
 export const SET_IS_BOOKMARK = 'SET_IS_BOOKMARK'
+
+// 书城
+export const SET_HOT_SEARCH_OFFSETY = 'SET_HOT_SEARCH_OFFSETY'

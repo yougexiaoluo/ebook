@@ -1,6 +1,7 @@
 import * as types from './mutations-type'
 
 export default {
+  // 阅读器
   setFileName: ({ commit }, fileName) => { // 异步操作，类似于Promise，可以链式变成 .then(() => {})
     return commit(types.SET_FILENAME, fileName)
   },
@@ -57,5 +58,10 @@ export default {
   },
   setOffsetY: ({ commit }, offsetY) => {
     return commit(types.SET_OFFSETY, offsetY)
+  },
+
+  // 书城
+  setHotSearchOffsetY: ({ commit }, offsetY) => {
+    return commit(types.SET_HOT_SEARCH_OFFSETY, offsetY)
   }
 }

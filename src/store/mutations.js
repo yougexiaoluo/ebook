@@ -1,6 +1,7 @@
 import * as types from './mutations-type'
 
 export default {
+  // 阅读器
   [types.SET_FILENAME]: (state, fileName) => { // 设置state中的fileName属性
     state.fileName = fileName
   },
@@ -57,5 +58,10 @@ export default {
   },
   [types.SET_IS_BOOKMARK]: (state, isBookmark) => {
     state.isBookmark = isBookmark
+  },
+
+  // 书城
+  [types.SET_HOT_SEARCH_OFFSETY]: (state, offsetY) => {
+    state.hotSearchOffsetY = offsetY
   }
 }
