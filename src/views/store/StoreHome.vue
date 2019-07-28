@@ -1,6 +1,7 @@
 <template>
   <div class="store-home">
     <search-bar />
+    <flap-card :data="random"/>
     <scroll :top="scrollTop"
             @onScroll="onScroll"
             ref="scroll"
@@ -32,15 +33,27 @@
 
 <script>
 import SearchBar from '@/components/home/SearchBar'
+import FlapCard from '@/components/home/FlapCard'
 import Scroll from '@/components/common/Scroll'
 import { storeHomeMixin } from '@/utils/mixin/ebookMixin'
+import { home } from '@/api/store.js'
 
 export default {
   mixins: [storeHomeMixin],
   data () {
     return {
-      scrollTop: 94
+      scrollTop: 94,
+      random: null
     }
+  },
+  mounted () {
+    home().then(response => {
+      if (response && response.status === 200) {
+        const data = response.data
+        const randomIndex = Math.floor(Math.random() * data.random.length)
+        this.random = data.random[randomIndex]
+      }
+    })
   },
   methods: {
     // 只是做设置offsetY的坐标
@@ -57,6 +70,7 @@ export default {
   },
   components: {
     SearchBar,
+    FlapCard,
     Scroll
   }
 }

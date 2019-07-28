@@ -63,5 +63,8 @@ export default {
   // 书城
   setHotSearchOffsetY: ({ commit }, offsetY) => {
     return commit(types.SET_HOT_SEARCH_OFFSETY, offsetY)
+  },
+  setFlapCardVisible: ({ commit }, visible) => {
+    return commit(types.SET_FLAP_CARD_VISIBLE, visible)
   }
 }

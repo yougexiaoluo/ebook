@@ -10,7 +10,7 @@
           <div class="title-text-wrapper">
             <span class="title-text title">{{ $t('home.title') }}</span>
           </div>
-          <div class="title-icon-shake-wrapper">
+          <div class="title-icon-shake-wrapper" @click="showFlapCard">
             <span class="icon-shake icon"></span>
           </div>
         </div>
@@ -69,27 +69,27 @@ export default {
     hotSearchOffsetY (offsetY) {
       if (offsetY > 0) {
         this.showShadow()
-        console.log(123)
       } else {
         this.hideShadow()
       }
     }
   },
   methods: {
-    // 显示标题
+    // 标题
     hideTitle () {
       this.titleVisible = false
     },
-    // 隐藏标题
     showTitle () {
       this.titleVisible = true
     },
+    // 阴影
     hideShadow () {
       this.shadowVisible = false
     },
     showShadow () {
       this.shadowVisible = true
     },
+    // 热搜索
     hideHotSearch () {
       this.hideHotSearchVisible = false
       if (this.offsetY > 0) {
@@ -111,6 +111,7 @@ export default {
         this.$refs.hotSearch.reset()
       })
     },
+    // 返回按钮
     back () {
       if (this.offsetY > 0) {
         this.showShadow()
@@ -119,6 +120,10 @@ export default {
       }
       this.hideHotSearch()
       this.showTitle()
+    },
+    // 随机推荐
+    showFlapCard () {
+      this.setFlapCardVisible(true)
     }
   },
   components: {
@@ -187,7 +192,6 @@ export default {
       transition: all $animationTime $animationType;
       &.hide-title {
         top: 0;
-        // box-shadow: 0 px2rem(2) px2rem(10) px2rem(-2) #bbb;
       }
       .serarch-bar-input-blank {
         flex: 0 0 0;

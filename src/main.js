@@ -4,10 +4,13 @@ import router from '@/router'
 import store from '@/store/index'
 import FastClick from 'fastclick'
 import i18n from '@/lang/index'
+import VueLazyload from 'vue-lazyload'
+import './mock/index'
 
 import '@/assets/styles/css/icon.css'
 import 'normalize.css'
 
+Vue.use(VueLazyload)
 Vue.config.productionTip = false
 
 FastClick.attach(document.body)

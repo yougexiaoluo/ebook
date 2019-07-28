@@ -63,5 +63,8 @@ export default {
   // 书城
   [types.SET_HOT_SEARCH_OFFSETY]: (state, offsetY) => {
     state.hotSearchOffsetY = offsetY
+  },
+  [types.SET_FLAP_CARD_VISIBLE]: (state, visible) => {
+    state.flapCardVisible = visible
   }
 }

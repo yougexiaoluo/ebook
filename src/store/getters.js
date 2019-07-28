@@ -21,5 +21,6 @@ export default {
   isBookmark: state => state.isBookmark,
 
   // 书城
-  hotSearchOffsetY: state => state.hotSearchOffsetY
+  hotSearchOffsetY: state => state.hotSearchOffsetY,
+  flapCardVisible: state => state.flapCardVisible // 控制随机推荐模态框
 }

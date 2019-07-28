@@ -21,5 +21,6 @@ export default {
   isBookmark: null,
 
   // 书城首页
-  hotSearchOffsetY: 0
+  hotSearchOffsetY: 0,
+  flapCardVisible: false
 }
