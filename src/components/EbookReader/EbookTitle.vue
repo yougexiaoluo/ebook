@@ -27,7 +27,10 @@ export default {
   methods: {
     // 后退功能
     back () {
-      console.log('back')
+      this.$router.go(-1)
+      if (this.menuVisible) {
+        this.setMenuVisible(false)
+      }
     }
   }
 }

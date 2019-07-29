@@ -33,6 +33,16 @@ export default new Router({
           path: 'home',
           name: 'store-home',
           component: () => import(/* webpackChunkName: 'storeHome' */ '@/views/store/StoreHome.vue')
+        },
+        {
+          path: 'detail',
+          name: 'book-detail',
+          component: () => import(/* webpackChunkName: 'detail' */ '@/views/store/StoreDetail.vue')
+        },
+        {
+          path: 'list',
+          name: 'store-list',
+          component: () => import(/* webpackChunkName: 'list' */ '@/views/store/StoreList.vue')
         }
       ]
     }

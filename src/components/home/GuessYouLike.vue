@@ -2,9 +2,12 @@
   <div class="guess-you-like">
     <title-view :label="$t('home.guessYouLike')" :btn="$t('home.change')" @onClick="change" />
     <div class="guess-you-like-list">
-      <div class="guess-you-like-item" v-for="(item, index) in showData" :key="index" @click="showBookDetail(item)">
+      <div class="guess-you-like-item"
+           v-for="(item, index) in showData"
+           :key="index"
+           @click="showBookDetail(item)">
         <div class="img-wrapper">
-          <img class="img" v-lazy="item.cover" :key="item.cover">
+          <img class="img" v-lazy="item.cover" :key="item.cover" />
         </div>
         <div class="content-wrapper">
           <div class="title title-big" ref="title">{{item.title}}</div>
@@ -16,7 +19,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   import TitleView from '@/components/home/Title'
   import { realPx } from '@/utils/utils'
   import { storeHomeMixin } from '@/utils/mixin/ebookMixin'

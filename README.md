@@ -36,7 +36,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   3. 事件适配(移动端，pc端 ⭐)
   4. 横向、竖向出现滚动条
         解决方案： 将父容器的width、height设为100%之后设置overflow为hidden
-
+  5. mockjs 不支持.opf文件，只支持text文本
+     接口模拟：
+        1. 使用mockjs进行模拟
+        2. 在vue.config.js中进行配置，模拟
 ### 微信上使用时碰到的问题：
   * 画面闪烁，点击屏幕中央，翻页都会出现闪烁问题
       解决方案:

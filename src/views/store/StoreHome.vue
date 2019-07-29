@@ -29,7 +29,7 @@
 
 <script>
 import { storeHomeMixin } from '@/utils/mixin/ebookMixin'
-import { home } from '@/api/store.js'
+import { home } from '@/api/store'
 import SearchBar from '@/components/home/SearchBar'
 import FlapCard from '@/components/home/FlapCard'
 import Scroll from '@/components/common/Scroll'
@@ -55,9 +55,9 @@ export default {
   },
   mounted () {
     home().then(response => {
+      console.log(response)
       if (response && response.status === 200) {
         const data = response.data
-        console.log(data)
         const randomIndex = Math.floor(Math.random() * data.random.length)
         this.random = data.random[randomIndex]
         this.banner = data.banner

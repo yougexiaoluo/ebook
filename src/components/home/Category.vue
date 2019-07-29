@@ -9,8 +9,8 @@
       >
         <div class="category-item">
           <div class="content-wrapper">
-            <div class="title title-medium">{{categoryText(item.category)}}</div>
-            <div class="num sub-title-tiny">{{item.num + ' ' + $t('home.books')}}</div>
+            <div class="title title-medium">{{ categoryText(item.category) }}</div>
+            <div class="num sub-title-tiny">{{ item.num + ' ' + $t('home.books') }}</div>
           </div>
           <div class="img-wrapper">
             <div class="img-group">
