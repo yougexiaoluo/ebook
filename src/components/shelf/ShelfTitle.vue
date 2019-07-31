@@ -50,7 +50,7 @@ export default {
     onEditClick () {
       if (!this.isEditMode) {
         this.setShelfSelected([]) // 清空选中的书籍列表
-        this.shelfList.forEach(item => item.selected = false) // 重置选中状态
+        this.shelfList.forEach(item => (item.selected = false)) // 重置选中状态
       }
       this.setIsEditMode(!this.isEditMode)
     },

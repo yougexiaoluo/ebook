@@ -21,7 +21,6 @@ import ShelfItemAdd from './ShelfItemAdd'
 import ShelfItemCategory from './ShelfItemCategory'
 import { gotoStoreHome } from '@/utils/store'
 import { storeShelfMixin } from '@/utils/mixin/ebookMixin'
-import '@/utils/boost' // 拓展方法
 
 export default {
   props: {
@@ -47,7 +46,7 @@ export default {
       if (this.isEditMode) {
         this.data.selected = !this.data.selected
         // 选中书籍
-        if (this.data.selected) {
+        if (this.data.selected && this.data.type === 1) {
           this.shelfSelected.pushWidthoutDuplicate(this.data)
         } else {
           this.setShelfSelected(this.shelfSelected.filter(item => item.id !== this.data.id))
