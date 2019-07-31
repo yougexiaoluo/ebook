@@ -190,10 +190,12 @@ export function addToShelf (book) {
   saveBookShelf(shelfList)
 }
 
+// 从书架中移除书籍
 export function removeAddFromShelf (list) {
   return list.filter(item => item.type !== 3)
 }
 
+// 添加书籍到书架
 export function appendAddToShelf (list) {
   list.push({
     id: -1,
@@ -253,5 +255,23 @@ export function removeFromBookShelf (book) {
       item.itemList = removeAddFromShelf(item.itemList)
     }
     return item.fileName !== book.fileName
+  })
+}
+
+// 跳转到书籍详情
+export function gotoBookDetail (vue, book) {
+  vue.$router.push({
+    path: '/store/detail',
+    query: {
+      fileName: book.fileName,
+      category: book.categoryText
+    }
+  })
+}
+
+// 跳转到书架首页
+export function gotoStoreHome (vue) {
+  vue.$router.push({
+    path: '/store/home'
   })
 }

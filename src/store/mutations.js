@@ -66,5 +66,17 @@ export default {
   },
   [types.SET_FLAP_CARD_VISIBLE]: (state, visible) => {
     state.flapCardVisible = visible
+  },
+  [types.SET_IS_EDIT_MODE]: (state, isEditMode) => {
+    state.isEditMode = isEditMode
+  },
+  [types.SET_SHELF_LIST]: (state, list) => {
+    state.shelfList = list
+  },
+  [types.SET_SHLEF_SELECTED]: (state, selected) => {
+    state.shelfSelected = selected
+  },
+  [types.SET_SHELF_TITLE_VISIBLE]: (state, visible) => {
+    state.shelfTitleVisible = visible
   }
 }

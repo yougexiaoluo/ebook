@@ -1,0 +1,62 @@
+<template>
+  <div class="shelf-list">
+    <div class="shelf-list-item-wrapper"
+         v-for="item in shelfList"
+         :key="item.id"
+    >
+      <shelf-item :data="item" :style="{height: itemHeight}" />
+      <div class="shelf-list-title-wrapper">
+        <span class="shelf-list-title title-small">{{ item.title }}</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import ShelfItem from './ShelfItem'
+import { storeShelfMixin } from '@/utils/mixin/ebookMixin'
+import { realPx } from '@/utils/utils'
+
+export default {
+  created () {
+    this.getShelfList()
+  },
+  mixins: [storeShelfMixin],
+  computed: {
+    itemHeight () {
+      // w / 250 = h / 350
+      // h = w / 250 * 350
+      return ((window.innerWidth - realPx(120)) / 3) / 250 * 350 + 'px'
+    }
+  },
+  components: {
+    ShelfItem
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  @import '@/assets/styles/scss/global.scss';
+  @import '@/assets/styles/scss/home.scss';
+
+  .shelf-list {
+    position: absolute;
+    top: px2rem(94);
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 px2rem(15);
+    .shelf-list-item-wrapper {
+      flex: 0 0 33.33%;
+      width: 33.33%;
+      box-sizing: border-box;
+      padding: px2rem(15);
+      .shelf-list-title-wrapper {
+        margin-top: px2rem(10);
+      }
+    }
+  }
+</style>

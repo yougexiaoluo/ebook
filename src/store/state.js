@@ -22,5 +22,9 @@ export default {
 
   // 书城首页
   hotSearchOffsetY: 0,
-  flapCardVisible: false
+  flapCardVisible: false,
+  isEditMode: false, // 是否进入编辑模式
+  shelfList: [], // 书架图书列表
+  shelfSelected: [], // 书架图书选中列表
+  shelfTitleVisible: true // 书架表填显示状态
 }

@@ -5,7 +5,7 @@ import store from '@/store/index'
 import FastClick from 'fastclick'
 import i18n from '@/lang/index'
 import VueLazyload from 'vue-lazyload'
-import './mock/index' // mockjs 不支持blob对象
+// import './mock/index' // mockjs 不支持blob对象
 
 import '@/assets/styles/css/icon.css'
 import 'normalize.css'

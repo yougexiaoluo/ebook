@@ -1,7 +1,9 @@
 // 此文件用于存放相同的代码
 import { mapGetters, mapActions } from 'vuex'
 import { themeList, addCss, removeAllCss, getReadTimeByMinute } from '../book'
-import { saveLocation, getBookmark } from '../localStorage'
+import { saveLocation, getBookmark, getBookShelf, saveBookShelf } from '../localStorage'
+import { gotoBookDetail, appendAddToShelf, computeId, removeAddFromShelf } from '../store'
+import { shelf } from '@/api/store'
 
 const storeHomeMixin = {
   computed: {
@@ -18,13 +20,7 @@ const storeHomeMixin = {
       'setFlapCardVisible'
     ]),
     showBookDetail (book) {
-      this.$router.push({
-        path: '/store/detail',
-        query: {
-          fileName: book.fileName,
-          category: book.categoryText
-        }
-      })
+      gotoBookDetail(this, book)
     }
   }
 }
@@ -156,4 +152,64 @@ const ebookMixin = {
   }
 }
 
-export { ebookMixin, storeHomeMixin }
+const storeShelfMixin = {
+  computed: {
+    ...mapGetters([
+      'isEditMode',
+      'shelfList',
+      'shelfSelected',
+      'shelfTitleVisible',
+      'offsetY'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'setIsEditMode',
+      'setShelfList',
+      'setShelfSelected',
+      'setShelfTitleVisible',
+      'setOffsetY'
+    ]),
+    showBookDetail (book) {
+      gotoBookDetail(this, book)
+    },
+    // 获取数据，并对数据进行过滤
+    getCategoryList (title) {
+      this.getShelfList().then(() => {
+        const categoryList = this.shelfList.filter(book => book.type === 2 && book.title === title)[0]
+        this.setShelfCategory(categoryList)
+      })
+    },
+    // 获取书架列表数据
+    getShelfList () {
+      let shelfList = getBookShelf()
+      if (!shelfList) {
+        shelf().then(response => {
+          if (response.status === 200 && response.data && response.data.bookList) {
+            shelfList = appendAddToShelf(response.data.bookList)
+            saveBookShelf(shelfList)
+            return this.setShelfList(shelfList)
+          }
+        })
+      } else {
+        return this.setShelfList(shelfList)
+      }
+    },
+    moveOutOfGroup (f) {
+      this.setShelfList(this.shelfList.map(book => {
+        if (book.type === 2 && book.itemList) {
+          book.itemList = book.itemList.filter(subBook => !subBook.selected)
+        }
+        return book
+      })).then(() => {
+        const list = computeId(appendAddToShelf([].concat(
+          removeAddFromShelf(this.shelfList), ...this.shelfSelected)))
+        this.setShelfList(list).then(() => {
+          this.simpleToast(this.$t('shelf.moveBookOutSuccess'))
+          f && f()
+        })
+      })
+    }
+  }
+}
+export { ebookMixin, storeHomeMixin, storeShelfMixin }

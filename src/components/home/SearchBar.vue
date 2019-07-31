@@ -97,7 +97,7 @@ export default {
         this.hideTitle()
         this.showShadow()
       } else {
-        this.showTitle()
+        // this.showTitle()
         this.hideShadow()
       }
     },
@@ -119,8 +119,13 @@ export default {
       } else {
         this.hideShadow()
       }
-      this.hideHotSearch()
-      this.showTitle()
+      if (this.hideHotSearchVisible) {
+        this.hideHotSearch()
+        this.showTitle()
+      } else {
+        // 返回上一个浏览记录
+        this.$router.push('/store/shelf')
+      }
     },
     // 随机推荐
     showFlapCard () {

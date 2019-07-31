@@ -26,7 +26,7 @@ export default new Router({
     {
       path: '/store',
       name: 'store',
-      redirect: '/store/home',
+      redirect: '/store/shelf',
       component: () => import(/* webpackChunkName: 'store' */ '@/views/store/index.vue'),
       children: [
         {
@@ -43,6 +43,11 @@ export default new Router({
           path: 'list',
           name: 'store-list',
           component: () => import(/* webpackChunkName: 'list' */ '@/views/store/StoreList.vue')
+        },
+        {
+          path: 'shelf',
+          name: 'store-shelf',
+          component: () => import(/* webpackChunkName: 'shelf' */ '@/views/store/StoreShelf.vue')
         }
       ]
     }

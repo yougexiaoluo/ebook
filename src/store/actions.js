@@ -66,5 +66,17 @@ export default {
   },
   setFlapCardVisible: ({ commit }, visible) => {
     return commit(types.SET_FLAP_CARD_VISIBLE, visible)
+  },
+  setIsEditMode: ({ commit }, visible) => {
+    return commit(types.SET_IS_EDIT_MODE, visible)
+  },
+  setShelfList: ({ commit }, visible) => {
+    return commit(types.SET_SHELF_LIST, visible)
+  },
+  setShelfSelected: ({ commit }, visible) => {
+    return commit(types.SET_SHLEF_SELECTED, visible)
+  },
+  setShelfTitleVisible: ({ commit }, visible) => {
+    return commit(types.SET_SHELF_TITLE_VISIBLE, visible)
   }
 }

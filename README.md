@@ -40,6 +40,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
      接口模拟：
         1. 使用mockjs进行模拟
         2. 在vue.config.js中进行配置，模拟
+  6. 点击input的时候又是不能获取焦点，需要点击多次
+      解决方案：
+        ⭐⭐：暂未解决
+        
 ### 微信上使用时碰到的问题：
   * 画面闪烁，点击屏幕中央，翻页都会出现闪烁问题
       解决方案:
