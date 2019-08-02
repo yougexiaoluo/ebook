@@ -25,20 +25,35 @@ import { getFontFamily,
          saveTheme,
          getLocation
 } from '@/utils/localStorage'
+import { getLocalForage } from '@/utils/localForage'
 
 global.ePub = Epub
 
 export default {
   mounted () {
-    let fileName = this.$route.params.fileName.split('|').join('/') // 获取路由地址
-    this.setFileName(fileName).then(() => {
-      this.initEpub()
+    // 目录名
+    let books = this.$route.params.fileName.split('|')
+    // 书籍名
+    let fileName = books[1]
+    getLocalForage(fileName, (err, blob) => {
+      if (!err && blob) {
+        // 离线缓存中获取书籍
+        this.setFileName(books.join('/')).then(() => {
+          this.initEpub(blob)
+        })
+      } else {
+        // 获取在线书籍
+        this.setFileName(books.join('/')).then(() => {
+         const url = `${process.env.VUE_APP_RES_URL}/epub/${this.fileName}.epub`
+          this.initEpub(url)
+        })
+      }
     })
   },
   mixins: [ebookMixin],
   methods: {
-    initEpub () {
-      const url = `${process.env.VUE_APP_RES_URL}/epub/${this.fileName}.epub` // nginx 服务器静态资源地址
+    // 初始化书籍
+    initEpub (url) {
       this.book = new Epub(url)
       this.setCurrentBook(this.book) // 将this.book存储到store中，进行共享
       this.initRendition()

@@ -78,5 +78,11 @@ export default {
   },
   [types.SET_SHELF_TITLE_VISIBLE]: (state, visible) => {
     state.shelfTitleVisible = visible
+  },
+  [types.SET_SHELF_CATEGORY]: (state, category) => {
+    state.shelfCategory = category
+  },
+  [types.SET_CURRENT_TYPE]: (state, type) => {
+    state.currentType = type
   }
 }

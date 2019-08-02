@@ -26,5 +26,7 @@ export default {
   isEditMode: state => state.isEditMode,
   shelfList: state => state.shelfList,
   shelfSelected: state => state.shelfSelected,
-  shelfTitleVisible: state => state.shelfTitleVisible
+  shelfTitleVisible: state => state.shelfTitleVisible,
+  shelfCategory: state => state.shelfCategory, // 书架分类列表数据
+  currentType: state => state.currentType // 书架列表类型
 }

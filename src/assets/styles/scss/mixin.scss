@@ -34,6 +34,11 @@ $animationType: linear;
   align-items: center;
 }
 
+@mixin leftBottom {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
 @mixin columnLeft {
   display: flex;
   flex-direction: column;
@@ -74,8 +79,9 @@ $animationType: linear;
 @mixin scroll {
   overflow-x: hidden;
   overflow-y: scroll;
+  // 增强移动端滑动效果
   -webkit-overflow-scrolling: touch;
-
+  // 隐藏滚动条
   &::-webkit-scrollbar {
     display: none;
   }

@@ -45,6 +45,11 @@ export default new Router({
           component: () => import(/* webpackChunkName: 'list' */ '@/views/store/StoreList.vue')
         },
         {
+          path: 'category',
+          name: 'category',
+          component: () => import(/* webpackChunkName: 'list' */ '@/views/store/StoreCategory.vue')
+        },
+        {
           path: 'shelf',
           name: 'store-shelf',
           component: () => import(/* webpackChunkName: 'shelf' */ '@/views/store/StoreShelf.vue')

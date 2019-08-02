@@ -159,7 +159,9 @@ const storeShelfMixin = {
       'shelfList',
       'shelfSelected',
       'shelfTitleVisible',
-      'offsetY'
+      'offsetY',
+      'shelfCategory',
+      'currentType'
     ])
   },
   methods: {
@@ -168,8 +170,11 @@ const storeShelfMixin = {
       'setShelfList',
       'setShelfSelected',
       'setShelfTitleVisible',
-      'setOffsetY'
+      'setOffsetY',
+      'setShelfCategory',
+      'setCurrentType'
     ]),
+    // 显示书籍详情
     showBookDetail (book) {
       gotoBookDetail(this, book)
     },
@@ -195,6 +200,7 @@ const storeShelfMixin = {
         return this.setShelfList(shelfList)
       }
     },
+    // 移动到分组中
     moveOutOfGroup (f) {
       this.setShelfList(this.shelfList.map(book => {
         if (book.type === 2 && book.itemList) {

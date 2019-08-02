@@ -1,5 +1,6 @@
 <template>
   <transition name="fade">
+    <!-- @click.prevent 禁止点击 -->
     <div class="toast-bg-wrapper" @click.prevent v-if="visible">
       <div class="toast-bg">
         <div class="toast-wrapper">
@@ -30,6 +31,7 @@
       hide () {
         this.visible = false
       },
+      // 显示文本
       show () {
         this.updateText(this.text)
         clearTimeout(this.task)
@@ -39,12 +41,14 @@
           this.visible = false
         }, this.timeout)
       },
+      // 持续显示文本
       continueShow () {
         this.updateText(this.text)
         clearTimeout(this.task)
         this.task = null
         this.visible = true
       },
+      // 更新文本
       updateText (text) {
         this.showText = text
       }

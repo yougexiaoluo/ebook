@@ -27,6 +27,8 @@
 
 <script>
 import { storeShelfMixin } from '@/utils/mixin/ebookMixin'
+import { clearLocalStorage } from '@/utils/localStorage'
+import { clearLocalForage } from '@/utils/localForage'
 
 export default {
   mixins: [storeShelfMixin],
@@ -56,7 +58,12 @@ export default {
     },
     // 清除缓存
     clearCatch () {
-      console.log('clearCatch')
+      clearLocalStorage()
+      clearLocalForage()
+      this.setShelfSelected([])
+      this.setShelfList([])
+      this.getShelfList()
+      this.simpleToast(this.$t('shelf.clearCacheSuccess'))
     }
   },
   computed: {

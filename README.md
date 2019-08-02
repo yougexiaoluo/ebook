@@ -43,7 +43,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   6. 点击input的时候又是不能获取焦点，需要点击多次
       解决方案：
         ⭐⭐：暂未解决
-        
+  7. v-for 与 v-if 不建议一起使用，因为v-for的优先级比v-if的高  ⭐
 ### 微信上使用时碰到的问题：
   * 画面闪烁，点击屏幕中央，翻页都会出现闪烁问题
       解决方案:

@@ -78,5 +78,11 @@ export default {
   },
   setShelfTitleVisible: ({ commit }, visible) => {
     return commit(types.SET_SHELF_TITLE_VISIBLE, visible)
+  },
+  setShelfCategory: ({ commit }, category) => {
+    return commit(types.SET_SHELF_TITLE_VISIBLE, category)
+  },
+  setCurrentType: ({ commit }, type) => {
+    return commit(types.SET_SHELF_TITLE_VISIBLE, type)
   }
 }

@@ -11,7 +11,7 @@ export function getLocalStorage (key) {
 }
 
 export function removeLocalStorage (key) {
-  return localStorage.remove(key)
+  return localStorage.delete(key)
 }
 
 export function clearLocalStorage () {

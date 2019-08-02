@@ -6,8 +6,7 @@
             :bottom="scrollBottom"
             ref="scroll"
             @onScroll="onScroll">
-      <shelf-search />
-      <shelf-list :data="shelfList" />
+      <shelf-list :top="42" />
     </scroll>
     <shelf-footer />
   </div>
@@ -17,7 +16,6 @@
 import { storeShelfMixin } from '@/utils/mixin/ebookMixin'
 import ShelfTitle from '@/components/shelf/ShelfTitle'
 import Scroll from '@/components/common/Scroll'
-import ShelfSearch from '@/components/shelf/ShelfSearch'
 import ShelfList from '@/components/shelf/ShelfList'
 import ShelfFooter from '@/components/shelf/ShelfFooter'
 
@@ -49,7 +47,6 @@ export default {
   components: {
     ShelfTitle,
     Scroll,
-    ShelfSearch,
     ShelfList,
     ShelfFooter
   }

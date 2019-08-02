@@ -56,6 +56,12 @@ export default {
         if (this.data.type === 1) {
           this.showBookDetail(this.data)
         } else if (this.data.type === 2) {
+          this.$router.push({
+            path: '/store/category',
+            params: {
+              title: this.data.title
+            }
+          })
         } else {
           // 将实例对象作为参数进行传递
           gotoStoreHome(this)
