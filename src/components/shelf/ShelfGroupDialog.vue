@@ -17,23 +17,26 @@
     </div>
     <div class="dialog-new-group-wrapper" v-else>
       <div class="dialog-input-title-wrapper">
-        <span class="dialog-input-title">{{$t('shelf.groupName')}}</span>
+        <span class="dialog-input-title">{{ $t('shelf.groupName') }}</span>
       </div>
       <div class="dialog-input-wrapper">
         <div class="dialog-input-inner-wrapper">
-          <input type="text" class="dialog-input" v-model="newGroupName" ref="dialogInput">
-          <div class="dialog-input-clear-wrapper" @click="clear" v-show="newGroupName && newGroupName.length > 0">
+         <input type="text" class="dialog-input" v-model="newGroupName" ref="dialogInput" />
+          <div class="dialog-input-clear-wrapper"
+               @click="clear"
+               v-show="newGroupName && newGroupName.length > 0"
+          >
             <span class="icon-close-circle-fill"></span>
           </div>
         </div>
       </div>
     </div>
     <div slot="btn" class="group-dialog-btn-wrapper">
-      <div class="dialog-btn" @click="hide">{{$t('shelf.cancel')}}</div>
+      <div class="dialog-btn" @click="hide">{{ $t('shelf.cancel') }}</div>
       <div class="dialog-btn"
            :class="{'is-empty': newGroupName && newGroupName.length === 0}"
            @click="createNewGroup"
-           v-if="ifNewGroup">{{$t('shelf.confirm')}}
+           v-if="ifNewGroup">{{ $t('shelf.confirm') }}
       </div>
     </div>
   </ebook-dialog>
@@ -92,6 +95,7 @@
     },
     methods: {
       show () {
+        // 重新修改跟分组名
         this.ifNewGroup = this.showNewGroup
         this.newGroupName = this.groupName
         this.$refs.dialog.show()
@@ -114,12 +118,18 @@
       clear () {
         this.newGroupName = ''
       },
-      // 移动至分组
+      // 移动至指定分组
       moveToGroup (group) {
+        // shelfList 书架列表数据
         this.setShelfList(this.shelfList
           .filter(book => {
+            // 从分组中移除
             if (book.itemList) {
-              book.itemList = book.itemList.filter(subBook => this.shelfSelected.indexOf(subBook) < 0)
+              // console.log('存在')
+              book.itemList = book.itemList.filter(subBook => {
+                // console.log(this.shelfSelected.indexOf(subBook))
+                return this.shelfSelected.indexOf(subBook) < 0
+              })
             }
             return this.shelfSelected.indexOf(book) < 0
           }))
@@ -127,6 +137,7 @@
             if (group && group.itemList) {
               group.itemList = [...group.itemList, ...this.shelfSelected]
             }
+            // 重置id的操作，否则会出现 "Duplicate keys detected: '16'. This may cause an update error"，组件key重复
             group.itemList.forEach((item, index) => {
               item.id = index + 1
             })
@@ -195,7 +206,9 @@
         color: rgba(102, 102, 102, .5)
       }
       & > div {
+        width: 100%;
         padding: px2rem(15) 0;
+        @include center;
       }
       .dialog-list-item-text {
         flex: 1;

@@ -200,7 +200,7 @@ const storeShelfMixin = {
         return this.setShelfList(shelfList)
       }
     },
-    // 移动到分组中
+    // 删除分组(所有书籍都移到书架中)
     moveOutOfGroup (f) {
       this.setShelfList(this.shelfList.map(book => {
         if (book.type === 2 && book.itemList) {
@@ -218,4 +218,5 @@ const storeShelfMixin = {
     }
   }
 }
+
 export { ebookMixin, storeHomeMixin, storeShelfMixin }

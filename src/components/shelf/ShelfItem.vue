@@ -58,7 +58,7 @@ export default {
         } else if (this.data.type === 2) {
           this.$router.push({
             path: '/store/category',
-            params: {
+            query: {
               title: this.data.title
             }
           })

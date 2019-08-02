@@ -2,8 +2,9 @@
   <div class="shelf-list" :style="{ 'top': shelfListTop }">
     <transition-group name="list" tag="div" id="shelf-list">
       <div class="shelf-list-item-wrapper"
-           v-for="item in shelfList"
+           v-for="item in data"
            :key="item.id"
+           :data-key="item.id"
       >
         <shelf-item :data="item" :style="{height: itemHeight}" />
         <div class="shelf-list-title-wrapper">
@@ -53,7 +54,6 @@ export default {
 
   .shelf-list {
     position: absolute;
-    top: px2rem(94);
     left: 0;
     z-index: 100;
     width: 100%;

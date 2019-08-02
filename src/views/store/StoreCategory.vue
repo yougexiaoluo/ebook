@@ -1,13 +1,18 @@
 <template>
   <div class="store-shelf">
-    <shelf-title />
+    <shelf-title :title="shelfCategory.title" />
     <scroll class="store-shelf-scroll-wrapper"
             :top="0"
             :bottom="scrollBottom"
             ref="scroll"
-            @onScroll="onScroll">
-      <shelf-list :top="42" />
+            @onScroll="onScroll"
+            v-if="isShowList"
+    >
+      <shelf-list :top="42" :data="shelfCategory.itemList" />
     </scroll>
+    <div class="store-shelf-empty-view" v-else>
+      {{ $t('shelf.groupNone') }}
+    </div>
     <shelf-footer />
   </div>
 </template>
@@ -35,13 +40,20 @@ export default {
       })
     }
   },
+  mounted () {
+    // 挂在完成之后获取分组列表数据
+    this.getCategoryList(this.$route.query.title)
+    // 设置书架类型
+    this.setCurrentType(2)
+  },
+  computed: {
+    isShowList () {
+      return this.shelfCategory.itemList && this.shelfCategory.itemList.length > 0
+    }
+  },
   methods: {
     onScroll (offsetY) {
       this.setOffsetY(offsetY)
-    },
-    mounted () {
-      // 挂在完成之后获取书架列表
-      this.getShelfList()
     }
   },
   components: {
@@ -67,6 +79,17 @@ export default {
       width: 100%;
       height: 100%;
       z-index: 100;
+    }
+    .store-shelf-empty-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      font-size: px2rem(14);
+      color: #333;
+      @include center;
     }
   }
 </style>

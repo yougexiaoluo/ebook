@@ -1,6 +1,6 @@
 <template>
   <div class="store-shelf">
-    <shelf-title />
+    <shelf-title :title="$t('shelf.title')" />
     <scroll class="store-shelf-scroll-wrapper"
             :top="0"
             :bottom="scrollBottom"
@@ -28,6 +28,12 @@ export default {
       scrollBottom: 0
     }
   },
+  mounted () {
+    // 挂在完成之后获取书架列表
+    this.getShelfList()
+    this.setShelfCategory([])
+    this.setCurrentType(1)
+  },
   watch: {
     // 监听是否处于编辑模式，如果是真添加底部距离，否则不添加
     isEditMode (isEditMode) {
@@ -40,15 +46,11 @@ export default {
   methods: {
     onScroll (offsetY) {
       this.setOffsetY(offsetY)
-    },
-    mounted () {
-      // 挂在完成之后获取书架列表
-      this.getShelfList()
     }
   },
   components: {
-    ShelfTitle,
     Scroll,
+    ShelfTitle,
     ShelfSearch,
     ShelfList,
     ShelfFooter

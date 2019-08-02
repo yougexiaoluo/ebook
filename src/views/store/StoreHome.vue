@@ -55,7 +55,6 @@ export default {
   },
   mounted () {
     home().then(response => {
-      console.log(response)
       if (response && response.status === 200) {
         const data = response.data
         const randomIndex = Math.floor(Math.random() * data.random.length)

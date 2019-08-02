@@ -179,7 +179,7 @@ export const categoryText = function (category, vue) {
       return vue.$t('category.statistics')
   }
 }
-
+// 添加书籍到书架
 export function addToShelf (book) {
   let shelfList = getBookShelf()
   shelfList = removeAddFromShelf(shelfList)
@@ -209,6 +209,7 @@ export function computeId (list) {
     if (book.type !== 3) {
       book.id = index + 1
       if (book.itemList) {
+        // 使用递归实行
         book.itemList = computeId(book.itemList)
       }
     }

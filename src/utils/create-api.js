@@ -28,7 +28,9 @@ Vue.mixin({
       toast.updateText(text)
     },
     dialog (settings) {
-      return this.$createGroupDialog()
+      return this.$createGroupDialog({
+        $props: settings
+      })
     }
   }
 })

@@ -9,8 +9,8 @@
         </slot>
         <div class="dialog-btn-wrapper">
           <slot name="btn">
-            <div class="dialog-btn" @click="hide">{{$t('shelf.cancel')}}</div>
-            <div class="dialog-btn">{{$t('shelf.confirm')}}</div>
+            <div class="dialog-btn" @click="hide">{{ $t('shelf.cancel') }}</div>
+            <div class="dialog-btn">{{ $t('shelf.confirm') }}</div>
           </slot>
         </div>
       </div>
