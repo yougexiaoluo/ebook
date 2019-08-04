@@ -47,12 +47,17 @@ export default new Router({
         {
           path: 'category',
           name: 'category',
-          component: () => import(/* webpackChunkName: 'list' */ '@/views/store/StoreCategory.vue')
+          component: () => import(/* webpackChunkName: 'category' */ '@/views/store/StoreCategory.vue')
         },
         {
           path: 'shelf',
           name: 'store-shelf',
           component: () => import(/* webpackChunkName: 'shelf' */ '@/views/store/StoreShelf.vue')
+        },
+        {
+          path: 'speaking',
+          name: 'speaking',
+          component: () => import(/* webpackChunkName: 'speaking' */ '@/views/store/StoreSpeaking.vue')
         }
       ]
     }

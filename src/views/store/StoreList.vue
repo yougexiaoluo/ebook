@@ -11,7 +11,7 @@
       <featured :data="value" :titleText="titleText ? titleText : getCategoryText(key)"
                 :btnText="''"
                 v-for="(value, key, index) in list"
-                :key="index"/>
+                :key="index" />
     </scroll>
   </div>
 </template>
@@ -38,6 +38,7 @@
           return null
         }
       },
+      // 书籍总数量
       totalNumber () {
         let num = 0
         Object.keys(this.list).forEach(key => {
@@ -66,6 +67,7 @@
           this.$refs.title.hideShadow()
         }
       },
+      // 获取商店列表数据
       getList () {
         list().then(response => {
           this.list = response.data.data
@@ -78,6 +80,7 @@
             this.list = {}
             this.list[key] = data
           } else if (keyword) {
+            // Object.keys 返回一个新的数组
             Object.keys(this.list).filter(key => {
               this.list[key] = this.list[key].filter(book => book.fileName.indexOf(keyword) >= 0)
               return this.list[key].length > 0

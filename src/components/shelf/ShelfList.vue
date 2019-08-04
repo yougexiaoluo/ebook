@@ -21,9 +21,6 @@ import { storeShelfMixin } from '@/utils/mixin/ebookMixin'
 import { realPx, px2rem } from '@/utils/utils'
 
 export default {
-  created () {
-    this.getShelfList()
-  },
   mixins: [storeShelfMixin],
   props: {
     top: {
@@ -33,6 +30,7 @@ export default {
     data: Array
   },
   computed: {
+    // 自适应高度
     itemHeight () {
       // w / 250 = h / 350
       // h = w / 250 * 350

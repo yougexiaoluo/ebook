@@ -19,6 +19,7 @@ const storeHomeMixin = {
       'setHotSearchOffsetY',
       'setFlapCardVisible'
     ]),
+    // 进入书籍详情页
     showBookDetail (book) {
       gotoBookDetail(this, book)
     }
@@ -202,14 +203,14 @@ const storeShelfMixin = {
     },
     // 删除分组(所有书籍都移到书架中)
     moveOutOfGroup (f) {
+      console.log(1)
       this.setShelfList(this.shelfList.map(book => {
         if (book.type === 2 && book.itemList) {
           book.itemList = book.itemList.filter(subBook => !subBook.selected)
         }
         return book
       })).then(() => {
-        const list = computeId(appendAddToShelf([].concat(
-          removeAddFromShelf(this.shelfList), ...this.shelfSelected)))
+        const list = computeId(appendAddToShelf([].concat(removeAddFromShelf(this.shelfList), ...this.shelfSelected)))
         this.setShelfList(list).then(() => {
           this.simpleToast(this.$t('shelf.moveBookOutSuccess'))
           f && f()

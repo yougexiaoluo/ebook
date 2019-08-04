@@ -54,10 +54,10 @@
       .detail-cover-title-wrapper {
         .cover-title-text {
           color: #333;
-          font-size: px2rem(24);
+          font-size: px2rem(20);
           font-weight: bold;
           line-height: px2rem(26);
-          word-break: break-all;
+          @include ellipsis2(3);
         }
       }
       .cover-author-wrapper {

@@ -38,12 +38,14 @@ export default {
     // 监听是否处于编辑模式，如果是真添加底部距离，否则不添加
     isEditMode (isEditMode) {
       this.scrollBottom = isEditMode ? 48 : 0
+      // 页面加载完成，再次更新scroll组件的高度
       this.$nextTick(() => {
         this.$refs.scroll.refresh()
       })
     }
   },
   methods: {
+    // 监听页面滚动出去的距离
     onScroll (offsetY) {
       this.setOffsetY(offsetY)
     }

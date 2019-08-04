@@ -15,6 +15,7 @@
         <div class="icon-download tab-icon" v-if="item.index === 2 && !isDownload"></div>
         <div class="icon-download tab-icon" v-if="item.index === 2 && isDownload"></div>
         <div class="icon-move tab-icon" v-if="item.index === 3" ></div>
+        <!-- 移出书架按钮 -->
         <div class="icon-shelf tab-icon" v-if="item.index === 4"></div>
         <div class="tab-text" :class="{'remove-text': item.index === 4}">{{ label(item) }}</div>
       </div>

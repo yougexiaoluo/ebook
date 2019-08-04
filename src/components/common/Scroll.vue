@@ -54,8 +54,9 @@ export default {
     }
   },
   mounted () {
-    this.refresh()
+    // 重新跟新dom样式
     this.$nextTick(() => {
+    this.refresh()
       setTimeout(() => {
         this.scrollTo(realPx(this.initPosition.x), realPx(this.initPosition.y))
       }, 1)

@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   import TitleView from './Title'
   import { realPx } from '@/utils/utils'
   import { storeHomeMixin } from '@/utils/mixin/ebookMixin'
@@ -80,7 +80,7 @@
   }
 </script>
 
-<style lang="scss" rel="stylesheet/scss" scoped>
+<style lang="scss" scoped>
   @import '@/assets/styles/scss/global.scss';
 
   .featured {

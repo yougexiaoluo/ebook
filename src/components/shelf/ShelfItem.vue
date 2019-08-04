@@ -41,12 +41,14 @@ export default {
     }
   },
   methods: {
+    // 点击一本书/分组
     onItemClick () {
       // 处于编辑状态
       if (this.isEditMode) {
         this.data.selected = !this.data.selected
         // 选中书籍
         if (this.data.selected && this.data.type === 1) {
+          // pushWidthoutDuplicate 中的Array拓展方法 --> boots.js
           this.shelfSelected.pushWidthoutDuplicate(this.data)
         } else {
           this.setShelfSelected(this.shelfSelected.filter(item => item.id !== this.data.id))
@@ -54,15 +56,17 @@ export default {
       } else {
         // 不处于编辑状态
         if (this.data.type === 1) {
+          // 进入书籍详情
           this.showBookDetail(this.data)
         } else if (this.data.type === 2) {
+          // 进入分组
           this.$router.push({
             path: '/store/category',
             query: {
               title: this.data.title
             }
           })
-        } else {
+        } else { // 返回书城首页
           // 将实例对象作为参数进行传递
           gotoStoreHome(this)
         }

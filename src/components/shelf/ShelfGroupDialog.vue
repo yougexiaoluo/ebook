@@ -50,10 +50,7 @@
 
   export default {
     name: 'group-dialog',
-    mixins: [storeShelfMixin],
-    components: {
-      EbookDialog
-    },
+    // 接收数据
     props: {
       showNewGroup: {
         type: Boolean,
@@ -61,10 +58,18 @@
       },
       groupName: String
     },
+    mixins: [storeShelfMixin],
+    data () {
+      return {
+        ifNewGroup: false,
+        newGroupName: ''
+      }
+    },
     computed: {
       isInGroup () {
         return this.currentType === 2
       },
+      // 使用国际化文本
       defaultCategory () {
         return [
           {
@@ -87,12 +92,6 @@
         return !this.ifNewGroup ? this.$t('shelf.moveBook') : this.$t('shelf.newGroup')
       }
     },
-    data () {
-      return {
-        ifNewGroup: false,
-        newGroupName: ''
-      }
-    },
     methods: {
       show () {
         // 重新修改跟分组名
@@ -102,6 +101,7 @@
       },
       hide () {
         this.$refs.dialog.hide()
+        // 解决同时执行的逻辑，需要等待上一个执行完成后再执行
         setTimeout(() => {
           this.ifNewGroup = false
         }, 200)
@@ -109,6 +109,7 @@
       onGroupClick (item) {
         if (item.edit && item.edit === 1) {
           this.ifNewGroup = true
+          console.log(this.ifNewGroup)
         } else if (item.edit && item.edit === 2) {
           this.moveOutFromGroup(item)
         } else {
@@ -126,10 +127,7 @@
             // 从分组中移除
             if (book.itemList) {
               // console.log('存在')
-              book.itemList = book.itemList.filter(subBook => {
-                // console.log(this.shelfSelected.indexOf(subBook))
-                return this.shelfSelected.indexOf(subBook) < 0
-              })
+              book.itemList = book.itemList.filter(subBook => this.shelfSelected.indexOf(subBook) < 0)
             }
             return this.shelfSelected.indexOf(book) < 0
           }))
@@ -147,6 +145,7 @@
       },
       // 从分组中移出
       moveOutFromGroup () {
+        console.log(1)
         this.moveOutOfGroup(this.onComplete)
       },
       // 创建分组
@@ -175,10 +174,13 @@
         }
       },
       onComplete () {
-        saveBookShelf(this.shelfList)
         this.hide()
         this.setIsEditMode(false)
+        saveBookShelf(this.shelfList)
       }
+    },
+    components: {
+      EbookDialog
     }
   }
 </script>

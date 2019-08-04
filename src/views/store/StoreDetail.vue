@@ -2,7 +2,7 @@
   <div class="book-detail">
     <detail-title @back="back"
                   :showShelf="true"
-                  ref="title"></detail-title>
+                  ref="title" />
     <scroll class="content-wrapper"
             :top="42"
             :bottom="52"
@@ -13,34 +13,36 @@
                  :author="author"
                  :desc="desc" />
       <div class="book-detail-content-wrapper">
-        <div class="book-detail-content-title">{{$t('detail.copyright')}}</div>
+        <div class="book-detail-content-title">{{ $t('detail.copyright') }}</div>
         <div class="book-detail-content-list-wrapper">
           <div class="book-detail-content-row">
-            <div class="book-detail-content-label">{{$t('detail.publisher')}}</div>
+            <div class="book-detail-content-label">{{ $t('detail.publisher') }}</div>
             <div class="book-detail-content-text">{{publisher}}</div>
           </div>
           <div class="book-detail-content-row">
-            <div class="book-detail-content-label">{{$t('detail.category')}}</div>
+            <div class="book-detail-content-label">{{ $t('detail.category') }}</div>
             <div class="book-detail-content-text">{{categoryText}}</div>
           </div>
           <div class="book-detail-content-row">
-            <div class="book-detail-content-label">{{$t('detail.lang')}}</div>
+            <div class="book-detail-content-label">{{ $t('detail.lang') }}</div>
             <div class="book-detail-content-text">{{lang}}</div>
           </div>
           <div class="book-detail-content-row">
-            <div class="book-detail-content-label">{{$t('detail.ISBN')}}</div>
+            <div class="book-detail-content-label">{{ $t('detail.ISBN') }}</div>
             <div class="book-detail-content-text">{{isbn}}</div>
           </div>
         </div>
       </div>
       <div class="book-detail-content-wrapper">
-        <div class="book-detail-content-title">{{$t('detail.navigation')}}</div>
+        <div class="book-detail-content-title">{{ $t('detail.navigation') }}</div>
         <div class="book-detail-content-list-wrapper">
           <div class="loading-text-wrapper" v-if="!this.navigation">
-            <span class="loading-text">{{$t('detail.loading')}}</span>
+            <span class="loading-text">{{ $t('detail.loading') }}</span>
           </div>
           <div class="book-detail-content-item-wrapper">
-            <div class="book-detail-content-item" v-for="(item, index) in flatNavigation" :key="index"
+            <div class="book-detail-content-item"
+                 v-for="(item, index) in flatNavigation"
+                 :key="index"
                  @click="read(item)">
               <div class="book-detail-content-navigation-text"
                    :class="{'is-sub': item.deep> 1}"
@@ -55,7 +57,7 @@
         <div class="book-detail-content-title">{{$t('detail.trial')}}</div>
         <div class="book-detail-content-list-wrapper">
           <div class="loading-text-wrapper" v-if="!this.displayed">
-            <span class="loading-text">{{$t('detail.loading')}}</span>
+            <span class="loading-text">{{ $t('detail.loading') }}</span>
           </div>
         </div>
         <div id="preview" v-show="this.displayed" ref="preview"></div>
@@ -69,7 +71,7 @@
         {{inBookShelf ? $t('detail.isAddedToShelf') : $t('detail.addOrRemoveShelf')}}
       </div>
     </div>
-    <toast :text="toastText" ref="toast"></toast>
+    <toast :text="toastText" ref="toast" />
   </div>
 </template>
 
@@ -82,14 +84,14 @@
   import { px2rem, realPx } from '@/utils/utils'
   import { getLocalForage } from '@/utils/localForage'
   import { removeFromBookShelf, addToShelf } from '@/utils/store'
-  import { storeHomeMixin } from '@/utils/mixin/ebookMixin'
+  import { storeShelfMixin } from '@/utils/mixin/ebookMixin'
   import { getBookShelf, saveBookShelf } from '@/utils/localStorage'
   import Epub from 'epubjs'
 
   global.ePub = Epub
 
   export default {
-    mixins: [storeHomeMixin],
+    mixins: [storeShelfMixin],
     components: {
       DetailTitle,
       Scroll,
@@ -297,7 +299,7 @@
     mounted () {
       this.init()
       if (!this.shelfList || this.shelfList.length === 0) {
-        // this.getShelfList()
+        this.getShelfList()
       }
     }
   }
