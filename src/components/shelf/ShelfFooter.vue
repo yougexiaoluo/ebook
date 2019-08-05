@@ -62,7 +62,7 @@ export default {
     isSelected () {
       return this.shelfSelected && this.shelfSelected.length > 0
     },
-    // 隐私
+    // 是否已经是隐私模式
     isPrivate () {
       if (!this.isSelected) {
         return false
@@ -70,7 +70,7 @@ export default {
         return this.shelfSelected.every(item => item.private)
       }
     },
-    // 下载
+    // 是否已下载
     isDownload () {
       if (!this.isSelected) {
         return false
@@ -179,11 +179,6 @@ export default {
           book.cache = true
         })
       }
-      // this.shelfSelected.forEach(book => {
-      //   this.downloadBook(book).then(book => {
-      //     book.cache = true
-      //   })
-      // })
     },
     downloadBook (book) {
       let text = ''

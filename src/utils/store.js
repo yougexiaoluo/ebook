@@ -185,6 +185,7 @@ export function addToShelf (book) {
   shelfList = removeAddFromShelf(shelfList)
   book.type = 1
   shelfList.push(book)
+  // 重新运算id
   shelfList = computeId(shelfList)
   shelfList = appendAddToShelf(shelfList)
   saveBookShelf(shelfList)
@@ -272,7 +273,6 @@ export function gotoBookDetail (vue, book) {
 
 // 跳转到书架首页
 export function gotoStoreHome (vue) {
-  console.log('go_home')
   vue.$router.push({
     path: '/store/home'
   })

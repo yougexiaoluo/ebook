@@ -37,7 +37,7 @@ export function lengthLocalForage (cb) {
     cb && cb(numberOfKeys)
       // console.log(numberOfKeys)
     }).catch(function (err) {
-      if (err) {}
+      if (err) throw err
     // console.log(err)
   })
 }
@@ -48,7 +48,7 @@ export function iteratorLocalForage () {
   }).then(function () {
     // console.log('Iteration has completed')
   }).catch(function (err) {
-    if (err) {}
+    if (err) throw err
     // console.log(err)
   })
 }

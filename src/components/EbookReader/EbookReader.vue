@@ -44,7 +44,7 @@ export default {
       } else {
         // 获取在线书籍
         this.setFileName(books.join('/')).then(() => {
-         const url = `${process.env.VUE_APP_RES_URL}/epub/${this.fileName}.epub`
+         let url = `${process.env.VUE_APP_EPUB_URL}/${this.fileName}.epub`
           this.initEpub(url)
         })
       }
@@ -55,14 +55,41 @@ export default {
     // 初始化书籍
     initEpub (url) {
       this.book = new Epub(url)
-      this.setCurrentBook(this.book) // 将this.book存储到store中，进行共享
+      this.setCurrentBook(this.book) // 将this.book存储到Vuex中，进行共享
       this.initRendition()
-      // this.initGesture()  实现书签功能，不能使用了
       this.parseBook()
       // 初始化完成后，进行书籍分页
       this.book.ready.then(() => {
         return this.book.locations.generate(750 * (window.innerWidth / 375) * getFontSize(this.fileName) / 16)
       }).then(locations => {
+        this.navigation.forEach(nav => {
+          nav.pagelist = []
+        })
+        locations.forEach(item => {
+          const loc = item.match(/\[(.*)\]!/)[1]
+          this.navigation.forEach(nav => {
+            // 判断nav对象中是否存在href属性
+            if (nav.href) {
+              const href = nav.href.match(/^(.*)\.html$/)
+              if (href) {
+                if (href[1] === loc) {
+                  nav.pagelist.push(item)
+                }
+              }
+            }
+          })
+          let currentPage = 1
+          this.navigation.forEach((nav, index) => {
+            if (index === 0) {
+              nav.page = 1
+            } else {
+              nav.page = currentPage
+            }
+            currentPage += nav.pagelist.length + 1
+          })
+        })
+        // 保存分页数据到Vuex
+        this.setPagelist(locations)
         this.setBookAvailable(true)
         this.refreshLocation() // 重新回去进度，分页未完成的时候获取progress为null
       })
@@ -130,21 +157,22 @@ export default {
       // 选择默认主题
       this.rendition.themes.select(defaultTheme)
     },
+    // 初始化rendition
     initRendition () {
-      // 生成rendition对象
+      // 创建rendition对象
       this.rendition = this.book.renderTo('read', {
         width: innerWidth,
         height: innerHeight,
         method: 'default' // 兼容微信
       })
       // 开始渲染电子书
-      const location = getLocation(this.fileName)
+      const location = getLocation(this.fileName) // 从本地localstorage中获取数据
       this.display(location, () => {
         this.initTheme()
         this.initFontFamily()
         this.initFontSize()
         this.initGlobalStyle()
-        this.refreshLocation()
+        // this.refreshLocation()
       })
       // 渲染完成，并且可以获取内容的时候
       this.rendition.hooks.content.register(contents => {
@@ -156,12 +184,12 @@ export default {
           contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/family/montserrat.css`),
           contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/family/tangerine.css`)
         ]).then(() => {
-          // 字体加载完成之后
+          // 字体加载完成之后执行的逻辑
         })
       })
     },
+    // 手势操作(判断左滑、右滑)
     initGesture () {
-      // 手势操作(判断左滑、右滑)
       this.rendition.on('touchstart', event => {
         this.touchStartX = event.changedTouches[0].clientX
         this.startTime = event.timeStamp
@@ -178,9 +206,7 @@ export default {
         } else {
           this.toggleTitleAndMenu()
         }
-        // 阻止事件冒泡、浏览器默认行为
-        event.preventDefault() // 这里epubjs会带来版本问题
-        event.stopPropagation()
+        this.defaultBehavior(event)
       })
     },
     // 解析电子书
@@ -213,7 +239,7 @@ export default {
             return find(newItem.filter(parentItem => parentItem.id === item.parent)[0], ++level)
           }
         }
-        // 添加level字段
+        // 添加level字段, 用于区分是否存在子目录
         newItem.forEach((item, i) => {
           item.level = find(item)
         })
@@ -240,17 +266,18 @@ export default {
       if (this.firstOffsetY) {
         offsetY = event.changedTouches[0].clientY - this.firstOffsetY
         this.setOffsetY(offsetY)
-        event.preventDefault() // 解决设备上下拉造成整体下拉的问题
-        event.stopPropagation()
+        // 解决设备上下拉造成整体下拉的问题
+        this.defaultBehavior(event)
       } else {
         this.firstOffsetY = event.changedTouches[0].clientY
       }
     },
+    // 触控结束，重置坐标位置
     moveEnd (event) {
       this.firstOffsetY = 0
       this.setOffsetY(0)
     },
-    // 兼容pc端事件
+    // 兼容pc端事件 -- 区分状态
     // 1 - 鼠标进入
     // 2 - 鼠标进入后移动
     // 3 - 鼠标从移动转态松手
@@ -258,8 +285,7 @@ export default {
     mouseDown (event) {
       this.mouseState = 1
       this.mosueStartTime = event.timeStamp
-      event.preventDefault()
-      event.stopPropagation()
+      this.defaultBehavior(event)
     },
     mouseMove (event) {
       if (this.mouseState === 1) {
@@ -273,8 +299,7 @@ export default {
           this.firstOffsetY = event.clientY
         }
       }
-      event.preventDefault()
-      event.stopPropagation()
+      this.defaultBehavior(event)
     },
     mouseUp (event) {
       if (this.mouseState === 2) {
@@ -289,8 +314,13 @@ export default {
       if (time < 100) {
         this.mouseState = 4
       }
-      event.preventDefault()
-      event.stopPropagation()
+      this.defaultBehavior(event)
+    },
+    // 阻止事件默认行为
+    defaultBehavior (e) {
+      // 阻止事件冒泡、浏览器默认行为
+      e.preventDefault() // 这里epubjs会带来版本问题
+      e.stopPropagation()
     }
   }
 }

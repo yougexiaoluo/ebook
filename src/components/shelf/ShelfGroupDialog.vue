@@ -109,7 +109,6 @@
       onGroupClick (item) {
         if (item.edit && item.edit === 1) {
           this.ifNewGroup = true
-          console.log(this.ifNewGroup)
         } else if (item.edit && item.edit === 2) {
           this.moveOutFromGroup(item)
         } else {
@@ -145,7 +144,6 @@
       },
       // 从分组中移出
       moveOutFromGroup () {
-        console.log(1)
         this.moveOutOfGroup(this.onComplete)
       },
       // 创建分组

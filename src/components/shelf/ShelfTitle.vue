@@ -46,9 +46,8 @@
 
 <script>
 import { storeShelfMixin } from '@/utils/mixin/ebookMixin'
-import { clearLocalStorage } from '@/utils/localStorage'
+import { clearLocalStorage, saveBookShelf } from '@/utils/localStorage'
 import { clearLocalForage } from '@/utils/localForage'
-import { saveBookShelf } from 'g:/PanDownload/vue核心技术/Vue2.5 实战微信读书 媲美原生App的企业级web书城/资料2/node-imooc-ebook-master/vue-imooc-ebook-chapter/src/utils/localStorage';
 
 export default {
   props: {
@@ -69,6 +68,40 @@ export default {
         // 不显示
         this.ifHideShadow = true
       }
+    }
+  },
+  computed: {
+    selectedText () {
+      // 有可能没有选择书籍
+      const selectedNumber = this.shelfSelected ? this.shelfSelected.length : 0
+      return selectedNumber <= 0 ? this.$t('shelf.selectBook') : (selectedNumber === 1 ? this.$t('shelf.haveSelectedBook').replace('$1', selectedNumber) : this.$t('shelf.haveSelectedBooks').replace('$1', selectedNumber))
+    },
+    popupCancelBtn () {
+      return this.createPopupBtn(this.$t('shelf.cancel'), () => {
+        this.hidePopup()
+      })
+    },
+    showClear () {
+      return this.currentType === 1
+    },
+    showBack () {
+      return this.currentType === 2 && !this.isEditMode
+    },
+    showChangeGroup () {
+      return this.currentType === 2 && (this.isEditMode || this.emptyCategory)
+    },
+    changeGroupLeft () {
+      return !this.emptyCategory
+    },
+    changeGroupRight () {
+      return this.emptyCategory
+    },
+    emptyCategory () {
+      return !this.shelfCategory || !this.shelfCategory.itemList || this.shelfCategory.itemList.length === 0
+    },
+    // 控制编辑按钮
+    showEdit () {
+      return this.currentType === 1 || !this.emptyCategory
     }
   },
   methods: {
@@ -123,7 +156,7 @@ export default {
       }, 200)
     },
     deleteGroup () {
-      if(!this.emptyCategory) {
+      if (!this.emptyCategory) {
         this.setShelfSelected(this.shelfCategory.itemList)
         this.moveOutOfGroup(this.onComplete)
       } else {
@@ -161,40 +194,6 @@ export default {
     back () {
       this.$router.go(-1)
       this.setIsEditMode(false)
-    }
-  },
-  computed: {
-    selectedText () {
-      // 有可能没有选择书籍
-      const selectedNumber = this.shelfSelected ? this.shelfSelected.length : 0
-      return selectedNumber <= 0 ? this.$t('shelf.selectBook') : (selectedNumber === 1 ? this.$t('shelf.haveSelectedBook').replace('$1', selectedNumber) : this.$t('shelf.haveSelectedBooks').replace('$1', selectedNumber))
-    },
-    popupCancelBtn () {
-      return this.createPopupBtn(this.$t('shelf.cancel'), () => {
-        this.hidePopup()
-      })
-    },
-    showClear () {
-      return this.currentType === 1
-    },
-    showBack () {
-      return this.currentType === 2 && !this.isEditMode
-    },
-    showChangeGroup () {
-      return this.currentType === 2 && (this.isEditMode || this.emptyCategory)
-    },
-    changeGroupLeft () {
-      return !this.emptyCategory
-    },
-    changeGroupRight () {
-      return this.emptyCategory
-    },
-    emptyCategory () {
-      return !this.shelfCategory || !this.shelfCategory.itemList || this.shelfCategory.itemList.length === 0
-    },
-    // 控制编辑按钮
-    showEdit () {
-      return this.currentType === 1 || !this.emptyCategory
     }
   }
 }

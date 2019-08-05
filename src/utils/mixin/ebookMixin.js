@@ -203,7 +203,6 @@ const storeShelfMixin = {
     },
     // 删除分组(所有书籍都移到书架中)
     moveOutOfGroup (f) {
-      console.log(1)
       this.setShelfList(this.shelfList.map(book => {
         if (book.type === 2 && book.itemList) {
           book.itemList = book.itemList.filter(subBook => !subBook.selected)

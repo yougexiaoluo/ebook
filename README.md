@@ -47,6 +47,27 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   8. 将分组中的选中的书籍移出分组，不能正确移出，其次是最后一本书不能从书架中移除的问题
       解决方案:
         ⭐⭐：暂未解决
+  9. 移出书架有时会出现类似卡死状态bug
+       解决方案:
+        ⭐⭐：暂未解决
+  10. router 的访问模式   history | hash 与Nginx配合使用问题
+  11. 书籍资源没有加载完成时，点击切换上、下一页的时候会报错
+#### 打包问题
+  1. 打包文件时单文件大于 244 KiB
+      解决方案：
+        在vue.config.js中进行配置打包参数
+        ```
+        configureWebpack: {
+          performace: {
+            hints: 'warning',
+            maxAssetSize: 512 * 1024,
+            maxEntrypointSize: 512 * 1024
+          }
+        }
+        ```
+
+
+
 ### 微信上使用时碰到的问题：
   * 画面闪烁，点击屏幕中央，翻页都会出现闪烁问题
       解决方案:
@@ -67,6 +88,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   5. 搜索下方显示阴影
 
 
+
 假设前后端同时开发(前端没有数据时)，你会怎么办？
     解决方案：
         1. 统一好每个接口，请求方式、提交字段、返回数据的结构
@@ -80,3 +102,12 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 从输入url开始，浏览器执行过程？
     涉及问题：
         三次握手与四次挥手
+
+
+
+项目中使用到的技术：
+  Mysql + nodejs + express + vue-create-api
+   + vue-router + axios + Nginx + indexDB 
+   + localStorage + vuex + vue-lazyload 
+   + vue-i18n  + epubjs + mockjs
+   + js-base64 + js-md5 + 科大讯飞线上语音合成接口 + 

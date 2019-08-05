@@ -4,8 +4,8 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  // mode: 'history',
-  base: process.env.BASE_URL,
+  // mode: 'history', // 配合nginx本地才能正常使用history模式 ⭐⭐⭐
+  // base: process.env.BASE_URL,
   routes: [{
       path: '/',
       name: 'home',
