@@ -8,7 +8,7 @@
       <span class="icon-share" v-else></span>
     </div>
     <div class="title-text" v-if="title">
-      {{title}}
+      {{ title }}
     </div>
   </div>
 </template>

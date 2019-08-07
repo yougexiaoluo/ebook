@@ -48,7 +48,7 @@
                  :key="index"
                  @click="read(item)">
               <div class="book-detail-content-navigation-text"
-                   :class="{'is-sub': item.deep> 1}"
+                   :class="{'is-sub': item.deep > 1}"
                    :style="itemStyle(item)"
                    v-if="item.label">
                 {{ item.label }}
@@ -71,9 +71,9 @@
       </div>
     </scroll>
     <div class="bottom-wrapper">
-      <div class="bottom-btn" @click.stop.prevent="readBook()">{{ $t('detail.read') }}</div>
-      <div class="bottom-btn" @click.stop.prevent="trialListening()">{{ $t('detail.listen') }}</div>
-      <div class="bottom-btn" @click.stop.prevent="addOrRemoveShelf()">
+      <div class="bottom-btn" @click.stop.prevent="readBook">{{ $t('detail.read') }}</div>
+      <div class="bottom-btn" @click.stop.prevent="trialListening">{{ $t('detail.listen') }}</div>
+      <div class="bottom-btn" @click.stop.prevent="addOrRemoveShelf">
         <span class="icon-check" v-if="inBookShelf"></span>
         {{inBookShelf ? $t('detail.isAddedToShelf') : $t('detail.addOrRemoveShelf')}}
       </div>
@@ -126,7 +126,8 @@
     computed: {
       desc () {
         if (this.description) {
-          return this.description.substring(0, 100)
+          // 书籍描述
+          return this.description.substring(0, 80)
         } else {
           return ''
         }
@@ -169,11 +170,11 @@
     methods: {
       // 添加书籍到书架/移除
       addOrRemoveShelf () {
-        if (this.inBookShelf) {
+        if (this.inBookShelf) { // 先删除，再保存
           this.setShelfList(removeFromBookShelf(this.bookItem)).then(() => {
             saveBookShelf(this.shelfList)
           })
-        } else {
+        } else { // 直接追加
           addToShelf(this.bookItem)
           this.setShelfList(getBookShelf())
         }
@@ -188,9 +189,11 @@
           path: `/ebook/${this.bookItem.categoryText}|${this.fileName}`
         })
       },
+      // 听书功能
       trialListening () {
         // 从获取indexDB相应数据
         getLocalForage(this.bookItem.fileName, (err, blob) => {
+          // 已离线缓存
           if (!err && blob && blob instanceof Blob) {
             this.$router.push({
               path: '/store/speaking',
@@ -198,7 +201,7 @@
                 fileName: this.bookItem.fileName
               }
             })
-          } else {
+          } else { // 没有离线缓存
             this.$router.push({
               path: '/store/speaking',
               query: {
@@ -230,6 +233,7 @@
         })
         return arr
       },
+      // 下载电子书
       downloadBook () {
         const opf = `${process.env.VUE_APP_EPUB_URL}/${this.bookItem.categoryText}/${this.bookItem.fileName}/OEBPS/package.opf`
         this.parseBook(opf)

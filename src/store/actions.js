@@ -64,17 +64,17 @@ export default {
   setHotSearchOffsetY: ({ commit }, offsetY) => {
     return commit(types.SET_HOT_SEARCH_OFFSETY, offsetY)
   },
-  setFlapCardVisible: ({ commit }, visible) => {
-    return commit(types.SET_FLAP_CARD_VISIBLE, visible)
+  setFlapCardVisible: ({ commit }, bol) => {
+    return commit(types.SET_FLAP_CARD_VISIBLE, bol)
   },
-  setIsEditMode: ({ commit }, visible) => {
-    return commit(types.SET_IS_EDIT_MODE, visible)
+  setIsEditMode: ({ commit }, isEditMode) => {
+    return commit(types.SET_IS_EDIT_MODE, isEditMode)
   },
-  setShelfList: ({ commit }, visible) => {
-    return commit(types.SET_SHELF_LIST, visible)
+  setShelfList: ({ commit }, list) => {
+    return commit(types.SET_SHELF_LIST, list)
   },
-  setShelfSelected: ({ commit }, visible) => {
-    return commit(types.SET_SHLEF_SELECTED, visible)
+  setShelfSelected: ({ commit }, selected) => {
+    return commit(types.SET_SHLEF_SELECTED, selected)
   },
   setShelfTitleVisible: ({ commit }, visible) => {
     return commit(types.SET_SHELF_TITLE_VISIBLE, visible)

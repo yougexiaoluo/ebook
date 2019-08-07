@@ -5,7 +5,7 @@
         <span class="icon-back" @click="back"></span>
       </div>
       <div class="right">
-        <div class="icon-wrapper">
+        <div class="icon-wrapper" @click="showBookShelf">
           <span class="icon-shelf"></span>
         </div>
         <div class="icon-wrapper">
@@ -31,6 +31,10 @@ export default {
       if (this.menuVisible) {
         this.setMenuVisible(false)
       }
+    },
+    // 跳转到书架
+    showBookShelf () {
+      this.$router.push('/store/shelf')
     }
   }
 }

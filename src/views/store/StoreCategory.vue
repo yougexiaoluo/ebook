@@ -35,9 +35,12 @@ export default {
     // 监听是否处于编辑模式，如果是真添加底部距离，否则不添加
     isEditMode (isEditMode) {
       this.scrollBottom = isEditMode ? 48 : 0
-      this.$nextTick(() => {
-        this.$refs.scroll.refresh()
-      })
+      // 分组没有数据时，不需要刷新
+      if (this.shelfCategory.itemList.length > 0) {
+        this.$nextTick(() => {
+          this.$refs.scroll.refresh()
+        })
+      }
     }
   },
   mounted () {

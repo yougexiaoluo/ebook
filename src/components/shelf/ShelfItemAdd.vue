@@ -15,6 +15,7 @@ export default {}
     width: 100%;
     height: 100%;
     border: px2rem(1) solid #ccc;
+    box-sizing: border-box;
     @include center;
     .icon-add {
       font-size: px2rem(40);

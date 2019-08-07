@@ -1,5 +1,5 @@
 <template>
-  <div class="popup" v-if="popupVisible">
+  <div class="popup" v-show="popupVisible">
     <!-- 遮罩层 -->
     <transition name="fade">
       <div class="popup-bg" @click.stop.prevent="hide" v-show="popupVisible"></div>

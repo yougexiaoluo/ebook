@@ -9,14 +9,11 @@
 </template>
 
 <script>
-export default {
-  mounted () {
-    // console.log(this.data)
-  },
-  props: {
-    data: Object
+  export default {
+    props: {
+      data: Object
+    }
   }
-}
 </script>
 
 <style lang="scss" scoped>

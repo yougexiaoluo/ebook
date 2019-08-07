@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="bottom-btn-wrapper">
-      <span class="bottom-btn-text">{{$t('detail.addOrRemoveShelf')}}</span>
+      <span class="bottom-btn-text">{{ $t('detail.addOrRemoveShelf') }}</span>
     </div>
   </div>
 </template>

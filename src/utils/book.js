@@ -1,6 +1,7 @@
-import { getReadTime } from '@/utils/localStorage'
-import { realPx } from '@/utils/utils'
+import { getReadTime } from './localStorage'
+import { realPx } from './utils'
 
+// 字体类型
 export const FONT_FAMILY_LIST = [
   { font: 'Default' },
   { font: 'Cabin' },
@@ -9,6 +10,7 @@ export const FONT_FAMILY_LIST = [
   { font: 'Tangerine' }
 ]
 
+// 字体大小
 export const FONT_SIZE_LIST = [
   { fontSize: 12 },
   { fontSize: 14 },
@@ -18,6 +20,7 @@ export const FONT_SIZE_LIST = [
   { fontSize: 22 },
   { fontSize: 24 }
 ]
+
 // 主题
 export function themeList (vue) {
   return [

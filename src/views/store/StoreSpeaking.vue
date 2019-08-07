@@ -1,6 +1,6 @@
 <template>
   <div class="book-speaking">
-    <detail-title @back="back" ref="title"></detail-title>
+    <detail-title @back="back" ref="title" />
     <scroll class="content-wrapper"
             :top="42"
             :bottom="scrollBottom"
@@ -10,31 +10,35 @@
       <book-info :cover="cover"
                  :title="title"
                  :author="author"
-                 :desc="desc"></book-info>
+                 :desc="desc" />
       <div class="book-speak-title-wrapper">
         <div class="icon-speak-wrapper">
           <span class="icon-speak"></span>
         </div>
         <div class="speak-title-wrapper">
-          <span class="speak-title">{{$t('speak.voice')}}</span>
+          <span class="speak-title">{{ $t('speak.voice') }}</span>
         </div>
         <div class="icon-down-wrapper" @click="toggleContent">
-          <span :class="{'icon-down2': !ifShowContent, 'icon-up': ifShowContent}"></span>
+          <span :class="{ 'icon-down2': !ifShowContent, 'icon-up': ifShowContent }"></span>
         </div>
       </div>
       <div class="book-detail-content-wrapper" v-show="ifShowContent">
         <div class="book-detail-content-list-wrapper">
           <div class="loading-text-wrapper" v-if="!this.navigation">
-            <span class="loading-text">{{$t('detail.loading')}}</span>
+            <span class="loading-text">{{ $t('detail.loading') }}</span>
           </div>
           <div class="book-detail-content-item-wrapper">
-            <div class="book-detail-content-item" v-for="(item, index) in flatNavigation" :key="index"
+            <div class="book-detail-content-item"
+                 v-for="(item, index) in flatNavigation"
+                 :key="index"
                  @click="speak(item, index)">
               <speak-playing v-if="playingIndex === index"
                              :number="5"
-                             ref="speakPlaying"></speak-playing>
-              <div class="book-detail-content-navigation-text" :class="{'is-playing': playingIndex === index}"
-                   v-if="item.label">{{item.label}}
+                             ref="speakPlaying" />
+              <div class="book-detail-content-navigation-text"
+                   :class="{'is-playing': playingIndex === index}"
+                   v-if="item.label">
+                {{ item.label }}
               </div>
             </div>
           </div>
@@ -69,7 +73,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   import DetailTitle from '@/components/detail/DetaiTitle'
   import BookInfo from '@/components/detail/BookInfo'
   import Scroll from '@/components/common/Scroll'
@@ -201,13 +205,14 @@
       }
     },
     methods: {
+      // 创建语音
       createVoice (text) {
-        const xmlhttp = new XMLHttpRequest()
-        xmlhttp.open('GET', `${process.env.VUE_APP_VOICE_URL}/voice?text=${text}&lang=${this.lang.toLowerCase()}`, false)
-        xmlhttp.send()
-        const xmlDoc = xmlhttp.responseText
-        if (xmlDoc) {
-          const json = JSON.parse(xmlDoc)
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', `${process.env.VUE_APP_VOICE_URL}/voice?text=${text}&lang=${this.lang.toLowerCase()}`, false)
+        xhr.send()
+        const resText = xhr.responseText
+        if (resText) {
+          const json = JSON.parse(resText)
           if (json.path) {
             this.$refs.audio.src = json.path
             this.continuePlay()
@@ -217,38 +222,8 @@
         } else {
           this.showToast('播放失败')
         }
-        /*
-        axios.create({
-          baseURL: process.env.VUE_APP_VOICE_URL + '/voice'
-        })({
-          method: 'get',
-          params: {
-            text: text,
-            lang: this.lang.toLowerCase ()
-          }
-        }).then(response => {
-          if (response.status === 200) {
-            if (response.data.error === 0) {
-              const downloadUrl = response.data.path
-              console.log('开始下载...%s', downloadUrl)
-              downloadMp3(downloadUrl, blob => {
-                const url = window.URL.createObjectURL(blob)
-                console.log(blob, url)
-                this.$refs.audio.src = url
-                this.continuePlay ()
-              })
-            } else {
-              this.showToast(response.data.msg)
-            }
-          } else {
-            this.showToast('请求失败')
-          }
-        }).catch(err => {
-          console.log(err)
-          this.showToast('播放失败')
-        })
-        */
       },
+      // 播放/暂停
       togglePlay () {
         if (!this.isPlaying) {
           if (this.playStatus === 0) {
@@ -260,6 +235,7 @@
           this.pausePlay()
         }
       },
+      // 语音播放
       speak (item, index) {
         this.resetPlay()
         this.playingIndex = index
@@ -288,6 +264,7 @@
           })
         }
       },
+      // 重新播放
       resetPlay () {
         if (this.playStatus === 1) {
           this.pausePlay()
@@ -295,9 +272,11 @@
         this.isPlaying = false
         this.playStatus = 0
       },
+      // 播放
       play () {
         this.createVoice(this.paragraph)
       },
+      // 继续播放
       continuePlay () {
         this.$refs.audio.play().then(() => {
           this.$refs.speakPlaying[0].startAnimation()
@@ -305,23 +284,27 @@
           this.playStatus = 1
         })
       },
+      // 停止播放
       pausePlay () {
         this.$refs.audio.pause()
         this.$refs.speakPlaying[0].stopAnimation()
         this.isPlaying = false
         this.playStatus = 2
       },
+      // 播放完成
       onAudioEnded () {
         this.resetPlay()
         this.currentPlayingTime = this.$refs.audio.currentTime
         const percent = Math.floor((this.currentPlayingTime / this.totalPlayingTime) * 100)
         this.$refs.speakWindow.refreshProgress(percent)
       },
+      // 监听时间变化
       onTimeUpdate () {
         this.currentPlayingTime = this.$refs.audio.currentTime
         const percent = Math.floor((this.currentPlayingTime / this.totalPlayingTime) * 100)
         this.$refs.speakWindow.refreshProgress(percent)
       },
+      // 资源是否可播放
       onCanPlay () {
         this.audioCanPlay = true
         this.currentPlayingTime = this.$refs.audio.currentTime
@@ -338,6 +321,7 @@
           }
         })
       },
+      // 初始化
       init () {
         const fileName = this.$route.query.fileName
         if (!this.bookItem) {
@@ -361,6 +345,7 @@
           this.findBookFromList(fileName)
         }
       },
+      // 下载电子书
       downloadBook (fileName) {
         download(
           this.bookItem,
@@ -373,6 +358,7 @@
             })
           })
       },
+      // 解析电子书
       parseBook (blob) {
         this.book = new Epub(blob)
         this.book.loaded.metadata.then(metadata => {
@@ -397,6 +383,7 @@
       back () {
         this.$router.go(-1)
       },
+      // 监听页面的滚动
       onScroll (offsetY) {
         if (offsetY > realPx(42)) {
           this.$refs.title.showShadow()
@@ -404,9 +391,12 @@
           this.$refs.title.hideShadow()
         }
       },
+      // 切换内容
       toggleContent () {
         this.ifShowContent = !this.ifShowContent
       },
+
+      // 显示正在播放的部分电子书
       display () {
         const height = window.innerHeight * 0.9 - realPx(40) - realPx(54) - realPx(46) - realPx(48) - realPx(60) - realPx(44)
         this.rendition = this.book.renderTo('read', {
@@ -416,6 +406,7 @@
         })
         this.rendition.display()
       },
+
       doFlatNavigation (content, deep = 1) {
         const arr = []
         content.forEach(item => {

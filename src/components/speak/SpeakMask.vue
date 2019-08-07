@@ -1,8 +1,12 @@
 <template>
   <transition name="fade">
-    <div class="book-speak-mask-wrapper" @click.stop.prevent="hide" v-show="visible">
+    <div class="book-speak-mask-wrapper"
+         @click.stop.prevent="hide"
+         v-show="visible">
       <transition name="popup-slide-up">
-        <div class="book-speak-mask-card-wrapper" v-show="speakCardVisible" @click.stop.prevent="hide">
+        <div class="book-speak-mask-card-wrapper"
+             v-show="speakCardVisible"
+             @click.stop.prevent="hide">
           <div class="pulldown-icon-wrapper" @click="hide">
             <span class="icon-pull_down"></span>
           </div>
@@ -11,16 +15,16 @@
               <span class="icon-speak"></span>
             </div>
             <div class="speak-title-wrapper">
-              <span class="speak-title">{{$t('speak.voice')}}</span>
+              <span class="speak-title">{{ $t('speak.voice') }}</span>
             </div>
             <div class="read-fulltext-wrapper">
-              <span class="read-fulltext">{{$t('speak.read')}}</span>
+              <span class="read-fulltext">{{ $t('speak.read') }}</span>
             </div>
           </div>
           <div class="card-section-title-wrapper">
-            <div class="card-section-title-text">{{title}}</div>
-            <div class="card-section-sub-title-text" v-if="currentSectionIndex">{{currentSectionIndex}} /
-              {{currentSectionTotal}}
+            <div class="card-section-title-text">{{ title }}</div>
+            <div class="card-section-sub-title-text" v-if="currentSectionIndex">
+              {{ currentSectionIndex }} / {{ currentSectionTotal }}
             </div>
           </div>
           <div class="setting-progress">
@@ -35,11 +39,11 @@
                      ref="progress">
             </div>
             <div class="progress-text">
-              <div class="progress-text-current">{{playInfo ? playInfo.currentMinute : '00'}}:{{playInfo ?
-                playInfo.currentSecond : '00'}}
+              <div class="progress-text-current">{{ playInfo ? playInfo.currentMinute : '00' }}:{{ playInfo ?
+                playInfo.currentSecond : '00' }}
               </div>
-              <div class="progress-text-left">-{{playInfo ? playInfo.leftMinute : '00'}}:{{playInfo ?
-                playInfo.leftSecond : '00'}}
+              <div class="progress-text-left">-{{ playInfo ? playInfo.leftMinute : '00' }}:{{ playInfo ?
+                playInfo.leftSecond : '00' }}
               </div>
             </div>
           </div>
@@ -48,24 +52,27 @@
               <span class="icon-settings"></span>
               <div class="settings-text">{{$t('speak.settings')}}</div>
             </div>
-            <span class="icon-play_backward" :class="{'not-use': currentSectionIndex <= 1}" @click.stop.prevent="prev"></span>
+            <span class="icon-play_backward"
+                  :class="{'not-use': currentSectionIndex <= 1}"
+                  @click.stop.prevent="prev"></span>
             <div class="icon-play-wrapper" @click.stop.prevent="togglePlay">
               <span class="icon-play_go" v-if="!isPlaying"></span>
               <span class="icon-play_pause" v-else></span>
             </div>
-            <span class="icon-play_forward" :class="{'not-use': currentSectionIndex >= currentSectionTotal}"
+            <span class="icon-play_forward"
+                  :class="{ 'not-use': currentSectionIndex >= currentSectionTotal }"
                   @click.stop.prevent="next"></span>
             <div class="icon-clock-wrapper">
               <span class="icon-clock"></span>
-              <div class="clock-text">{{$t('speak.timing')}}</div>
+              <div class="clock-text">{{ $t('speak.timing') }}</div>
             </div>
           </div>
           <div class="read-apply-wrapper">
-            {{$t('speak.apply')}}
+            {{ $t('speak.apply') }}
           </div>
           <div class="read-title-wrapper">
             <span class="line"></span>
-            <div class="read-title-text">{{$t('speak.current')}}</div>
+            <div class="read-title-text">{{ $t('speak.current') }}</div>
             <span class="line"></span>
           </div>
           <div class="book-wrapper" ref="bookWrapper">
@@ -99,10 +106,12 @@
       }
     },
     methods: {
+      // 更新进度条
       refreshProgress (p) {
         this.progress = p
         this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
       },
+      // 更新文本
       updateText (promise) {
         promise.then(() => {
           const currentPage = this.rendition.currentLocation()
@@ -120,9 +129,11 @@
           })
         })
       },
+      // 暂停/播放
       togglePlay () {
         this.$parent.togglePlay()
       },
+      // 播放上一段
       prev () {
         if (this.currentSectionIndex > 1) {
           this.updateText(this.rendition.prev())
@@ -133,6 +144,7 @@
           }, 500)
         }
       },
+      // 播放下一段
       next () {
         if (this.currentSectionIndex < this.currentSectionTotal) {
           this.updateText(this.rendition.next())
@@ -143,6 +155,7 @@
           }, 500)
         }
       },
+      // 显示正在播放的部分电子书
       display () {
         if (!this.rendition) {
           this.rendition = this.book.renderTo('book-read', {
@@ -156,14 +169,17 @@
         }
       },
       onProgressChange (progress) {},
+      // 监听进度
       onProgressInput (progress) {
         this.progress = progress
         this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
       },
+      // 隐藏播放面板
       hide () {
         this.speakCardVisible = false
         this.visible = false
       },
+      // 显示播放面板
       show () {
         this.visible = true
         this.speakCardVisible = true
@@ -172,9 +188,9 @@
           this.display()
         })
       },
+      // 重新刷新播放进度
       refresh () {
         this.readHeight = window.innerHeight * 0.9 - realPx(40) - realPx(54) - realPx(46) - realPx(48) - realPx(60) - realPx(44)
-        // console.log(this.readHeight)
         this.$refs.bookWrapper.style.height = this.readHeight + 'px'
       }
     }

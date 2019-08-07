@@ -8,7 +8,7 @@
            @click="onGroupClick(item)"
       >
         <div v-if="(item.edit === 2 && isInGroup) || item.edit !== 2 || !item.edit">
-          <div class="dialog-list-item-text">{{item.title}}</div>
+          <div class="dialog-list-item-text">{{ item.title }}</div>
           <div class="dialog-list-icon-wrapper" v-if="isInGroup && shelfCategory.id === item.id">
             <span class="icon-check"></span>
           </div>
@@ -24,7 +24,7 @@
          <input type="text" class="dialog-input" v-model="newGroupName" ref="dialogInput" />
           <div class="dialog-input-clear-wrapper"
                @click="clear"
-               v-show="newGroupName && newGroupName.length > 0"
+               v-if="newGroupName && newGroupName.length > 0"
           >
             <span class="icon-close-circle-fill"></span>
           </div>
@@ -121,8 +121,7 @@
       // 移动至指定分组
       moveToGroup (group) {
         // shelfList 书架列表数据
-        this.setShelfList(this.shelfList
-          .filter(book => {
+        this.setShelfList(this.shelfList.filter(book => {
             // 从分组中移除
             if (book.itemList) {
               // console.log('存在')

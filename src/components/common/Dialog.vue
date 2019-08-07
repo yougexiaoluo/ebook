@@ -3,7 +3,7 @@
     <div class="dialog" v-show="visible">
       <div class="dialog-wrapper">
         <div class="dialog-title-wrapper">
-          <span class="dialog-title-text">{{title}}</span>
+          <span class="dialog-title-text">{{ title }}</span>
         </div>
         <slot>
         </slot>
@@ -39,7 +39,7 @@
   }
 </script>
 
-<style lang="scss" rel="stylesheet/scss" scoped>
+<style lang="scss" scoped>
   @import "@/assets/styles/scss/global.scss";
 
   .dialog {

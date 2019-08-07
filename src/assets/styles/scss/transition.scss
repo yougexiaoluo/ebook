@@ -1,4 +1,5 @@
-@import './mixin.scss';
+$animationTime: .2s;
+$animationType: linear;
 
 .slide-down-enter,
 .slide-down-leave-to {
@@ -28,7 +29,7 @@
 .title-move-leave-active,
 .hot-search-move-enter-active,
 .hot-search-move-leave-active {
-  transition: all $animationTime linear;
+  transition: all $animationTime $animationType;
 }
 
 .slide-up-enter,

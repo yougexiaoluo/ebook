@@ -179,6 +179,7 @@ export const categoryText = function (category, vue) {
       return vue.$t('category.statistics')
   }
 }
+
 // 添加书籍到书架
 export function addToShelf (book) {
   let shelfList = getBookShelf()
@@ -191,12 +192,10 @@ export function addToShelf (book) {
   saveBookShelf(shelfList)
 }
 
-// 从书架中移除书籍
 export function removeAddFromShelf (list) {
   return list.filter(item => item.type !== 3)
 }
 
-// 添加书籍到书架
 export function appendAddToShelf (list) {
   list.push({
     id: -1,
@@ -205,6 +204,7 @@ export function appendAddToShelf (list) {
   return list
 }
 
+// 重新计算id
 export function computeId (list) {
   return list.map((book, index) => {
     if (book.type !== 3) {
@@ -218,6 +218,7 @@ export function computeId (list) {
   })
 }
 
+// 查找电子书
 export function findBook (fileName) {
   const bookList = getLocalStorage('shelf')
   return flatBookList(bookList).find(item => item.fileName === fileName)
@@ -251,6 +252,7 @@ export function flatBookList (bookList) {
   }
 }
 
+// 从书架上移除
 export function removeFromBookShelf (book) {
   return getBookShelf().filter(item => {
     if (item.itemList) {

@@ -1,17 +1,17 @@
 <template>
   <div class="cover-title-wrapper">
     <div class="cover-title-left-wrapper">
-      <img class="cover-img" :src="cover">
+      <img class="cover-img" v-lazy="cover">
     </div>
     <div class="cover-title-right-wrapper">
       <div class="detail-cover-title-wrapper">
-        <div class="cover-title-text">{{title}}</div>
+        <div class="cover-title-text">{{ title }}</div>
       </div>
       <div class="cover-author-wrapper">
-        <div class="cover-author-text">{{author}}</div>
+        <div class="cover-author-text">{{ author }}</div>
       </div>
       <div class="detail-cover-description-wrapper">
-        <div class="detail-cover-description-text">{{desc}}</div>
+        <div class="detail-cover-description-text">{{ desc }}</div>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
   }
 </script>
 
-<style lang="scss" rel="stylesheet/scss" scoped>
+<style lang="scss" scoped>
   @import "@/assets/styles/scss/global.scss";
 
   .cover-title-wrapper {
@@ -49,15 +49,16 @@
     }
     .cover-title-right-wrapper {
       flex: 1;
-      padding: px2rem(10) px2rem(15);
+      width: 70%;
       box-sizing: border-box;
+      padding: px2rem(10) px2rem(15);
       .detail-cover-title-wrapper {
         .cover-title-text {
           color: #333;
           font-size: px2rem(20);
           font-weight: bold;
           line-height: px2rem(26);
-          @include ellipsis2(3);
+          @include ellipsis2(2);
         }
       }
       .cover-author-wrapper {

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { setLocalForage } from '@/utils/localForage'
 
+// 首页
 export function home () {
   return axios({
     method: 'get',
@@ -8,6 +9,7 @@ export function home () {
   })
 }
 
+// 详情
 export function detail (book) {
   return axios({
     method: 'get',
@@ -18,6 +20,7 @@ export function detail (book) {
   })
 }
 
+// 分类列表
 export function list () {
   return axios({
     method: 'get',
@@ -25,6 +28,7 @@ export function list () {
   })
 }
 
+// 书架
 export function shelf () {
   return axios({
     method: 'get',
@@ -62,7 +66,6 @@ export function download (book, onSuccess, onError, onProgress) {
     })
 }
 
-// 听书
 export function flatList () {
   return axios({
     method: 'get',

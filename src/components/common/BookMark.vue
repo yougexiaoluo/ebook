@@ -35,13 +35,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/scss/global.scss";
+  @import "@/assets/styles/scss/global.scss";
 
-.bookmark {
-  width: 0;
-  height: 0;
-  border-width: px2rem(50) px2rem(10) px2rem(10) px2rem(10);
-  border-style: solid;
-  border-color: white white transparent white;
-}
+  .bookmark {
+    width: 0;
+    height: 0;
+    border-width: px2rem(50) px2rem(10) px2rem(10) px2rem(10);
+    border-style: solid;
+    border-color: white white transparent white;
+  }
 </style>

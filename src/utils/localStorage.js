@@ -21,7 +21,7 @@ export function clearLocalStorage () {
 export function saveBookShelf (shelf) {
   return setLocalStorage('shelf', shelf)
 }
-
+// 获取本地localStorage中的书架列表 -- 返回一个数组
 export function getBookShelf () {
   return getLocalStorage('shelf')
 }

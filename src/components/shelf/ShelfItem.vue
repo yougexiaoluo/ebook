@@ -48,8 +48,8 @@ export default {
         this.data.selected = !this.data.selected
         // 选中书籍
         if (this.data.selected && this.data.type === 1) {
-          // pushWidthoutDuplicate 中的Array拓展方法 --> boots.js
-          this.shelfSelected.pushWidthoutDuplicate(this.data)
+          // pushWithoutDuplicate 中的Array拓展方法 --> boots.js
+          this.shelfSelected.pushWithoutDuplicate(this.data)
         } else {
           this.setShelfSelected(this.shelfSelected.filter(item => item.id !== this.data.id))
         }

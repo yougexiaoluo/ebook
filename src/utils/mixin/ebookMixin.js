@@ -47,21 +47,13 @@ const ebookMixin = {
       'paginate',
       'pagelist',
       'offsetY',
-      'isBookmark',
-      'speakingIconBottom'
+      'isBookmark'
     ]),
     themeList () {
       return themeList(this)
     },
     // 获取章节标题
     getSectionName () {
-      // if (this.section) {
-      //   const sectionInfo = this.currentBook.section(this.section)
-      //   if (sectionInfo && sectionInfo.href) {
-      //     return this.currentBook.navigation.get(sectionInfo.href).label
-      //   }
-      // }
-
       return this.section ? this.navigation[this.section].label : ''
     }
   },
@@ -85,8 +77,7 @@ const ebookMixin = {
       'setPaginate',
       'setPagelist',
       'setOffsetY',
-      'setIsBookmark',
-      'setSpeakingIconBottom'
+      'setIsBookmark'
     ]),
     initGlobalStyle () {
       removeAllCss()
@@ -124,6 +115,17 @@ const ebookMixin = {
           this.setIsBookmark(true)
         } else {
           this.setIsBookmark(false)
+        }
+        if (this.pagelist) {
+          const totalPage = this.pagelist.length
+          const currentPage = currentLocation.start.location
+          if (currentPage && currentPage > 0) {
+            this.setPaginate(currentPage + ' / ' + totalPage)
+          } else {
+            this.setPaginate('')
+          }
+        } else {
+          this.setPaginate('')
         }
        }
       }
