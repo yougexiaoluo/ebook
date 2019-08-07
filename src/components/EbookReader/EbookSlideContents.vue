@@ -24,7 +24,7 @@
          v-show="!searchVisible"
     >
       <div class="slide-contents-book-img-wrapper">
-        <img :src="cover"
+        <img v-lazy="cover"
              class="slide-contents-book-img"
         />
       </div>

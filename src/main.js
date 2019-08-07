@@ -12,7 +12,12 @@ import './utils/boost' // 拓展方法
 import '@/assets/styles/css/icon.css'
 import 'normalize.css'
 
-Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  loading: require('@/assets/images/loading.gif'),
+  // error: require('@/assets/images/load_image_error.png'),
+  attempt: 1
+})
 Vue.config.productionTip = false
 
 FastClick.attach(document.body)

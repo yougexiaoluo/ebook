@@ -2,7 +2,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import { themeList, addCss, removeAllCss, getReadTimeByMinute } from '../book'
 import { saveLocation, getBookmark, getBookShelf, saveBookShelf } from '../localStorage'
-import { gotoBookDetail, appendAddToShelf, computeId, removeAddFromShelf } from '../store'
+import { gotoBookDetail, appendAddToShelf, computeId, removeAddFromShelf, removeFromBookShelf, addToShelf } from '../store'
 import { shelf } from '@/api/store'
 
 const storeHomeMixin = {
@@ -165,7 +165,21 @@ const storeShelfMixin = {
       'offsetY',
       'shelfCategory',
       'currentType'
-    ])
+    ]),
+    // 处理书籍是否已经存在书架中
+    inBookShelf () {
+      return function (bookItem) {
+        if (bookItem && this.shelfList) {
+          const flatShelf = (function flatten (arr) {
+            return [].concat(...arr.map(v => v.itemList ? [v, ...flatten(v.itemList)] : v))
+          })(this.shelfList).filter(item => item.type === 1)
+          const book = flatShelf.filter(item => item.fileName === bookItem.fileName)
+          return book && book.length > 0
+        } else {
+          return false
+        }
+      }
+    }
   },
   methods: {
     ...mapActions([
@@ -217,6 +231,17 @@ const storeShelfMixin = {
           f && f()
         })
       })
+    },
+    // 添加书籍到书架/移除
+    addOrRemoveShelf () {
+      if (this.inBookShelf(this.bookItem)) { // 先删除，再保存
+        this.setShelfList(removeFromBookShelf(this.bookItem)).then(() => {
+          saveBookShelf(this.shelfList)
+        })
+      } else { // 直接追加
+        addToShelf(this.bookItem)
+        this.setShelfList(getBookShelf())
+      }
     }
   }
 }

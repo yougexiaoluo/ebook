@@ -74,8 +74,8 @@
       <div class="bottom-btn" @click.stop.prevent="readBook">{{ $t('detail.read') }}</div>
       <div class="bottom-btn" @click.stop.prevent="trialListening">{{ $t('detail.listen') }}</div>
       <div class="bottom-btn" @click.stop.prevent="addOrRemoveShelf">
-        <span class="icon-check" v-if="inBookShelf"></span>
-        {{inBookShelf ? $t('detail.isAddedToShelf') : $t('detail.addOrRemoveShelf')}}
+        <span class="icon-check" v-if="inBookShelf(bookItem)"></span>
+        {{inBookShelf(bookItem) ? $t('detail.isAddedToShelf') : $t('detail.addOrRemoveShelf')}}
       </div>
     </div>
     <toast :text="toastText" ref="toast" />
@@ -90,9 +90,7 @@
   import { detail } from '@/api/store'
   import { px2rem, realPx } from '@/utils/utils'
   import { getLocalForage } from '@/utils/localForage'
-  import { removeFromBookShelf, addToShelf } from '@/utils/store'
   import { storeShelfMixin } from '@/utils/mixin/ebookMixin'
-  import { getBookShelf, saveBookShelf } from '@/utils/localStorage'
   import Epub from 'epubjs'
 
   global.ePub = Epub
@@ -153,32 +151,9 @@
       },
       author () {
         return this.metadata ? this.metadata.creator : ''
-      },
-      // 处理书籍是否已经存在书架中
-      inBookShelf () {
-        if (this.bookItem && this.shelfList) {
-          const flatShelf = (function flatten (arr) {
-            return [].concat(...arr.map(v => v.itemList ? [v, ...flatten(v.itemList)] : v))
-          })(this.shelfList).filter(item => item.type === 1)
-          const book = flatShelf.filter(item => item.fileName === this.bookItem.fileName)
-          return book && book.length > 0
-        } else {
-          return false
-        }
       }
     },
     methods: {
-      // 添加书籍到书架/移除
-      addOrRemoveShelf () {
-        if (this.inBookShelf) { // 先删除，再保存
-          this.setShelfList(removeFromBookShelf(this.bookItem)).then(() => {
-            saveBookShelf(this.shelfList)
-          })
-        } else { // 直接追加
-          addToShelf(this.bookItem)
-          this.setShelfList(getBookShelf())
-        }
-      },
       showToast (text) {
         this.toastText = text
         this.$refs.toast.show()

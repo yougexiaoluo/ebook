@@ -20,7 +20,9 @@
 <script>
   export default {
     props: {
-      cover: String,
+      cover: {
+        type: String
+      },
       title: String,
       author: String,
       desc: String

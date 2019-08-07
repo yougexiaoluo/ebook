@@ -389,6 +389,4 @@ app.get('/voice', (req, res) => {
 const server = app.listen(3000, (req, res) => {
   const port = server.address().port
   const host = server.address().address
-
-  console.log('server is listening at http://%s:%s', host, port)
 })

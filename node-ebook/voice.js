@@ -37,9 +37,7 @@ function createVoice (req, res) {
   headers['X-CurTime'] = currentTime
   headers['X-CheckSum'] = checkSum
   headers['X-Real-Ip'] = '127.0.0.1'
-  const data = qs.stringify({
-    text: text
-  })
+  const data = qs.stringify({ text })
   const options = {
     host: 'api.xfyun.cn',
     path: '/v1/service/v1/tts',

@@ -55,6 +55,7 @@
             :showPlay="showPlay"
             :isPlaying.sync="isPlaying"
             :playInfo="playInfo"
+            :bookItem="bookItem"
             @onPlayingCardClick="onPlayingCardClick"
     />
     <div class="book-wrapper">

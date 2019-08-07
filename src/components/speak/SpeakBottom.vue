@@ -21,21 +21,28 @@
         </div>
       </div>
     </div>
-    <div class="bottom-btn-wrapper">
-      <span class="bottom-btn-text">{{ $t('detail.addOrRemoveShelf') }}</span>
+    <div class="bottom-btn-wrapper" @click.stop.prevent="addOrRemoveShelf">
+      <span class="icon-check" v-if="inBookShelf(bookItem)"></span>
+      <span class="bottom-btn-text">
+        {{inBookShelf(bookItem) ? $t('detail.isAddedToShelf') : $t('detail.addOrRemoveShelf')}}
+      </span>
     </div>
   </div>
 </template>
 
 <script>
+  import { storeShelfMixin } from '@/utils/mixin/ebookMixin'
+
   export default {
+    mixins: [storeShelfMixin],
     props: {
       chapter: Object,
       currentSectionIndex: Number,
       currentSectionTotal: Number,
       showPlay: Boolean,
       isPlaying: Boolean,
-      playInfo: Object
+      playInfo: Object,
+      bookItem: Object
     },
     methods: {
       togglePlay () {
@@ -111,10 +118,10 @@
       height: px2rem(52);
       border-top: px2rem(1) solid #eee;
       box-sizing: border-box;
+      color: $color-blue;
       @include center;
       .bottom-btn-text {
         font-size: px2rem(14);
-        color: $color-blue;
         font-weight: bold;
       }
     }
