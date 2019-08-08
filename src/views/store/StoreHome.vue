@@ -20,9 +20,9 @@
           v-for="(item, index) in categoryList"
           :Key="index"
      >
-       <category-book :data="item" class="category-book" />
-       <category :data="categories" />
+      <category-book :data="item" class="category-book" />
      </div>
+      <category :data="categories" />
     </scroll>
   </div>
 </template>

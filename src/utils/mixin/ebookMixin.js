@@ -20,7 +20,8 @@ const storeHomeMixin = {
       'setFlapCardVisible'
     ]),
     // 进入书籍详情页
-    showBookDetail (book) {
+    showBookDetail (book, bol = true) {
+      if (!bol) this.setFlapCardVisible(bol)
       gotoBookDetail(this, book)
     }
   }

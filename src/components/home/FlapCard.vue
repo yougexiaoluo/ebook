@@ -43,7 +43,7 @@
           <div class="category">{{ categoryText() }}</div>
         </div>
         <div class="read-btn"
-             @click.stop="showBookDetail"
+             @click.stop="showBookDetail(data, false)"
         >
           {{ $t('home.readNow') }}
         </div>
