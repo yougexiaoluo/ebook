@@ -7,7 +7,16 @@
             ref="scroll"
     >
      <div class="banner-img-wrapper">
-       <div class="banner-img" :style="{'backgroundImage': `url(${banner})`}"></div>
+       <swiper ref="swiperOption"
+               :options="swiperOption"
+               v-if="banner.length > 0">
+        <swiper-slide class="banner-img"
+                      v-for="item in banner"
+                      :key="item._id"
+                      :style="{'backgroundImage': `url(${item.pic_url})`}">
+        </swiper-slide>
+      </swiper>
+      <div class="swiper-pagination"></div>
      </div>
      <guess-you-like :data="guessYouLike" class="guess-you-like" />
      <recommend :data="recommend" class="recommend" />
@@ -28,6 +37,7 @@
 </template>
 
 <script>
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { storeHomeMixin } from '@/utils/mixin/ebookMixin'
 import { home } from '@/api/store'
 import SearchBar from '@/components/home/SearchBar'
@@ -38,6 +48,8 @@ import Recommend from '@/components/home/Recommend'
 import Featured from '@/components/home/Featured'
 import CategoryBook from '@/components/home/CategoryBook'
 import Category from '@/components/home/Category'
+
+import 'swiper/dist/css/swiper.css'
 
 export default {
   mixins: [storeHomeMixin],
@@ -50,10 +62,18 @@ export default {
       recommend: null,
       featured: null,
       categoryList: null,
-      categories: null
+      categories: null,
+      swiperOption: {
+        loop: true, // 需要在swiper-container上添加一个判断 v-if
+        autoplay: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        }
+      }
     }
   },
-  mounted () {
+  created () {
     home().then(response => {
       if (response && response.status === 200) {
         const data = response.data
@@ -79,7 +99,8 @@ export default {
       }
       // 如上设置之后滚动条不会更新问题，需要重新计算滚动条高度
       this.$refs.scroll.refresh()
-    }
+    },
+    callback () {}
   },
   components: {
     SearchBar,
@@ -89,7 +110,9 @@ export default {
     Recommend,
     Featured,
     CategoryBook,
-    Category
+    Category,
+    swiper,
+    swiperSlide
   }
 }
 </script>
@@ -103,13 +126,34 @@ export default {
     background: #fff;
     .banner-img-wrapper {
       width: 100%;
-      padding: px2rem(10);
       box-sizing: border-box;
+      padding: px2rem(10);
+      position: relative;
       .banner-img {
         width: 100%;
         height: px2rem(150);
         background-repeat: no-repeat;
         background-size: 100% 100%;
+        &:last-child {
+          border-top-right-radius: px2rem(5);
+          border-bottom-right-radius: px2rem(5);
+        }
+        &:first-child {
+          border-top-left-radius: px2rem(5);
+          border-bottom-left-radius: px2rem(5);
+        }
+      }
+      .swiper-container {
+        border-radius: px2rem(5);
+      }
+      .swiper-pagination {
+        position: absolute;
+        bottom: px2rem(10);
+        left: 50%;
+        transform: translateX(-50%);
+        &.swiper-pagination-bullet-active {
+          background: orange !important;
+        }
       }
     }
     .guess-you-like,

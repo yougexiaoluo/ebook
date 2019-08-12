@@ -42,7 +42,7 @@
               <div class="progress-text-current">{{ playInfo ? playInfo.currentMinute : '00' }}:{{ playInfo ?
                 playInfo.currentSecond : '00' }}
               </div>
-              <div class="progress-text-left">-{{ playInfo ? playInfo.leftMinute : '00' }}:{{ playInfo ?
+              <div class="progress-text-left">{{ playInfo ? playInfo.leftMinute : '00' }}:{{ playInfo ?
                 playInfo.leftSecond : '00' }}
               </div>
             </div>
@@ -50,7 +50,7 @@
           <div class="playing-wrapper">
             <div class="icon-settings-wrapper">
               <span class="icon-settings"></span>
-              <div class="settings-text">{{$t('speak.settings')}}</div>
+              <div class="settings-text">{{ $t('speak.settings') }}</div>
             </div>
             <span class="icon-play_backward"
                   :class="{'not-use': currentSectionIndex <= 1}"
@@ -263,19 +263,19 @@
       }
       .card-section-title-wrapper {
         width: 100%;
-        height: px2rem(46);
         padding: 0 px2rem(15);
         box-sizing: border-box;
-        @include columnCenter;
         .card-section-title-text {
-          font-size: px2rem(16);
           color: #333;
+          font-size: px2rem(16);
           font-weight: bold;
+          @include ellipsis2(2);
         }
         .card-section-sub-title-text {
-          font-size: px2rem(12);
           color: #666;
-          margin-top: px2rem(5);
+          font-size: px2rem(12);
+          text-align: center;
+          margin: px2rem(5) 0;
         }
       }
       .setting-progress {
@@ -315,15 +315,16 @@
           box-sizing: border-box;
           .progress-text-current {
             flex: 1;
-            text-align: left;
-            font-size: px2rem(10);
             color: #666;
+            font-size: px2rem(10);
+            text-align: left;
           }
           .progress-text-left {
             flex: 1;
-            text-align: right;
-            font-size: px2rem(10);
             color: #666;
+            font-size: px2rem(10);
+            text-align: right;
+            letter-spacing: 1px;
           }
         }
       }

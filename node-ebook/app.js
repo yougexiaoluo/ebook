@@ -126,11 +126,36 @@ app.get('/book/home', (req, res) => {
 
     const length = results.length
     const guessYouLike = [] // 猜你喜欢
-    const banner = constant.baseUrl + '/img/banner/home_banner2.jpg' // 首页广告图
     const recommend = [] // 热门推荐
     const featured = [] // 精选
     const random = [] // 随机推荐
     const categoryList = createCategoryData(results) // 分类列表
+    const banner = [
+      {
+        _id: 0,
+        pic_url: constant.baseUrl + '/img/banner/home_banner.jpg'
+      },
+      {
+        _id: 1,
+        pic_url: constant.baseUrl + '/img/banner/home_banner2.jpg'
+      },
+      {
+        _id: 2,
+        pic_url: constant.baseUrl + '/img/banner/home_banner3.jpg'
+      },
+      {
+        _id: 3,
+        pic_url: constant.baseUrl + '/img/banner/home_banner4.jpg'
+      },
+      {
+        _id: 4,
+        pic_url: constant.baseUrl + '/img/banner/home_banner5.jpg'
+      },
+      {
+        _id: 5,
+        pic_url: constant.baseUrl + '/img/banner/home_banner6.jpg'
+      }
+    ] // 首页广告图
     const categories = [
       {
         category: 1,
